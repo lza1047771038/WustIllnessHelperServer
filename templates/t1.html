@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Django操作数据库</title>
+</head>
+<body>
+ 8     <table border="1">
+ 9         <tr>
+10             <th>用户名</th>
+11             <th>密码</th>
+12             <th>年龄</th>
+13         </tr>
+14         {% for item in li %}
+15         <tr>
+16             <td>{{ item.username }}</td>
+17             <td>{{ item.password }}</td>
+18             <td>{{ item.age }}</td>
+19         </tr>
+20         {% endfor %}
+21     </table>
+22 </body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+{% load static %}
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index - 我的 ASP.NET 应用程序</title>
+
+
+    <link href="{% static 'Bootstrap/3.3.7/css/bootstrap.min.css' %}" rel="stylesheet">
+    <script src="{% static 'Bootstrap/3.3.7/js/jquery-3.3.1.min.js' %}"></script>
+
+</head>
+
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a class="navbar-brand" href="/AddSingleQuestion">添加单选题</a></li>
+                <li><a href="/AddMutipleQuestion">添加多选题</a></li>
+                <li><a href="/AddManualQuestion">添加填空题</a></li>
+                <li><a href="/AddSurveyInfos">填写问卷信息</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br/>
+<br/>
+<br/>
+<div class="container body-content form-group">
+    <form action="" class="form-horizontal" method="post">
+        <hr/>
+        <hr/>
+        <h1 style="font-size: 30px;" class="form-group">
+            <label class=" control-label col-sm-8" style="text-align: left;">单选题(选项不多于10个)</label>
+            <a class="btn btn-danger" style="color: white;" id="clear" href="">清空</a>
+        </h1>
+        <div class="form-group">
+            <div class="form-group">
+                <label for="single_problem" class="control-label col-sm-4">题目名称</label>
+                <div class="col-sm-4">
+                    <input class="form-control" name="problem" id="single_problem" required/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="single_1" class="control-label col-sm-4">1.</label>
+                <div class="col-sm-4">
+                    <input class="form-control" name="1" id="single_1" required/>
+                </div>
+                <a class="btn btn-default" id='1' onclick=" addNext(this)">添加跳题</a>
+            </div>
+
+            <div class="form-group">
+                <label for="single_2" class="control-label col-sm-4">2.</label>
+                <div class="col-sm-4">
+                    <input class="form-control" name="2" id="single_2" required/>
+                </div>
+                <a class="btn btn-default" id='2' onclick=" addNext(this)">添加跳题</a>
+            </div>
+
+            <div class="form-group" id="select">
+                <a class="btn btn-block btn-default col-sm-2" onclick="addSelection()">增加选项</a>
+            </div>
+        </div>
+        <hr/>
+
+        <div class=" form-group">
+            <a class=" col-md-8"></a>
+            <input class="btn btn-default" type="submit" value="保存"/>
+            <a class="btn btn-danger" href="/AddMutipleQuestion">编辑多项选择</a>
+        </div>
+    </form>
+
+
+    <hr/>
+    <footer>
+        <p>&copy; 2019 - WustIllNessHelper</p>
+    </footer>
+</div>
+
+<script>
+
+    var ss = 3;
+
+    function addNext(obj) {
+        var node =
+            '<div class="col-sm-1">' +
+            '<input class="form-control col-sm-2" name="' + obj.id + '_next" required/>' +
+            '</div>';
+        $('#' + obj.id).before(node);
+    }
+
+    function addSelection() {
+
+        var node =
+            '<div class="form-group">' +
+            '<label for="single_' + ss + '" class="control-label col-sm-4">' + ss + '.</label>' +
+            '<div class="col-sm-4" >' +
+            '<input class="form-control" name="' + ss + '" id="single_' + ss + '"required />' +
+            '</div >' +
+            '<a class="btn btn-default" id=' + ss + ' onclick=" addNext(this)">添加跳题</a>' +
+            '</div >';
+        $("#select").before(node);
+        ss += 1;
+    }
+
+</script>
+
+</body>
+
+</html>

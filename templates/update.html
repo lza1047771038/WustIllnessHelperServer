@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form method="POST" action="/update">
+
+        {% csrf_token %}
+
+    <h1>userid：<input name="userid"></h1>
+    <h1>username：<input name="username"></h1>
+    <h1>coins：<input name="coin"></h1>
+    <h1>age：<input name="age"></h1>
+    <input type="submit" value="提交">
+</form>
+
+</body>
+</html>

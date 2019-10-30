@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+{% load static %}
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>调查问卷录入</title>
+    <link href="{% static 'Bootstrap/3.3.7/css/bootstrap.min.css' %}" rel="stylesheet">
+    <script src="{% static 'Bootstrap/3.3.7/js/jquery-3.3.1.min.js' %}"></script>
+
+</head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                <li><a href="/AddSingleQuestion">添加单选题</a></li>
+                <li><a href="/AddMutipleQuestion">添加多选题</a></li>
+                <li><a href="/AddManualQuestion">添加填空题</a></li>
+                <li><a class="navbar-brand" href="/AddSurveyInfos">填写问卷信息</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <div class="container body-content form-group">
+        <form action="" class="form-horizontal" method="post">
+            <hr />
+            <hr />
+            <h1 style="font-size: 30px;" class="form-group">
+                <label class=" control-label col-sm-8" style="text-align: left;">请填写问卷标题</label>
+                <a class="btn btn-danger" style="color: white;" id="clear" href="">清空</a>
+            </h1>
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="single_problem" class="control-label col-sm-4">问卷名称</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" name="title" id="single_problem" required />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="problem1" class="control-label col-sm-4">请填写</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" name="problem1" id="problem1" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="problem2" class="control-label col-sm-4">请填写</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" name="problem2" id="problem2" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="problem3" class="control-label col-sm-4">请填写</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" name="problem3" id="problem3" />
+                    </div>
+                </div>
+            </div>
+            <hr />
+
+            <div class=" form-group">
+                <a class=" col-md-8"></a>
+                <input class="btn btn-danger" type="submit" value="保存"></input>
+            </div>
+        </form>
+
+
+
+
+        <hr />
+        <footer>
+            <p>&copy; 2019 - WustIllNessHelper</p>
+        </footer>
+    </div>
+
+    <script>
+
+    </script>
+
+</body>
+
+</html>
