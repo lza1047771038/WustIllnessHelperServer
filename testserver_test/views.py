@@ -65,6 +65,8 @@ def getUserInfo(request):
     if request.method == 'POST':
         parm = request.POST
         target = parm.get('userid')
+        userinfo = UserInfo().objects.all().filter(userId=target)
+        return JsonResponse(list(userinfo).__getitem__(0))
 
 
 def login(request):  # 判断请求方法
