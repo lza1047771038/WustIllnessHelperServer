@@ -401,6 +401,7 @@ def uploadImage(request):
             # 分块写入
             for chunk in file.chunks():
                 f.write(chunk)
+            f.close()
 
         # # 记录日志，这一步可有可无，可定制
         # FileLogger.log_info("upload_image", uploadImg, FileLogger.IMAGE_HANDLER)
