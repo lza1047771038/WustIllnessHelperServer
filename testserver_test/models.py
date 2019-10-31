@@ -12,7 +12,6 @@ class UploadImage(models.Model):
         db_table = "upload_image"
         verbose_name = '图片'
 
-    id = models.IntegerField(primary_key=True, auto_created=True)
     filename = models.CharField(max_length=252, default="")
     file_md5 = models.CharField(max_length=128)
     file_type = models.CharField(max_length=32)
