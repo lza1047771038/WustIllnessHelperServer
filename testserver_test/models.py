@@ -39,7 +39,7 @@ class UploadImage(models.Model):
     # 获取本图片在本地的位置，即你的文件系统的路径，图片会保存在这个路径下
     def getImagePath(self):
         filename = self.file_md5 + "." + self.file_type
-        path = settings.MEDIA_ROOT + "/mediaImages/" + filename
+        path = settings.IMAGE_ROOT + filename
         return path
 
     def __str__(self):

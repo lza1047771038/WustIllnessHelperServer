@@ -130,5 +130,5 @@ STATIC_ROOT = (
 
 MEDIA_URL = '/MediaFiles/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'MediaFiles/')
-IMAGE_ROOT = os.path.join(MEDIA_ROOT, 'mediaVideos/')
+IMAGE_ROOT = os.path.join(MEDIA_ROOT, 'mediaImages/')
 # WEB_HOST_MEDIA_URL = os.path.join('http://127.0.0.1:8000', MEDIA_URL[1:], 'images/')
