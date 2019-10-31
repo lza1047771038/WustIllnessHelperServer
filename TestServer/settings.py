@@ -24,13 +24,7 @@ SECRET_KEY = '5a^yc6v6sm+oi=1_l9k&lf&=!2@a#sv9uz=xqjct-#fr6%a0*v'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    'www.wustIllNessHelper.cn',
-    '183.94.175.64',
-    '0.0.0.0:8000',
-    '192.168.1.102',
-    '127.0.0.1',
-    'localhost', ]
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
