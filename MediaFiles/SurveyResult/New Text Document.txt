@@ -1,0 +1,2 @@
+yum install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gcc make
+wget https://www.python.org/ftp/python/3.6.3/Python-3.6.3.tar.xz
