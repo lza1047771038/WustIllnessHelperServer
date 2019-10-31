@@ -406,7 +406,7 @@ def uploadImage(request):
         # FileLogger.log_info("upload_image", uploadImg, FileLogger.IMAGE_HANDLER)
 
         # 返回图片的url以供访问
-        return JsonResponse({"url": uploadImg.getImageUrl()})
+        return JsonResponse({"url": uploadImg.getImageUrl() + "   " + uploadImg.getImagePath()})
     return render(request, 'test.html')
 
 
