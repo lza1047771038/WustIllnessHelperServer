@@ -7,7 +7,7 @@ admin.site.site_header = '青春彩虹伞后台管理'
 admin.site.site_title = '彩虹伞'
 
 
-class Survey(admin.ModelAdmin):
+class SurveyAdmin(admin.ModelAdmin):
     list_display = ('title', 'type', 'warning', 'problem1', 'problem2', 'problem3', 'problemOffset')
     list_editable = ('title', 'type', 'warning', 'problem1', 'problem2', 'problem3')
     list_per_page = 10  # 每页显示行数
@@ -68,5 +68,6 @@ admin.site.register(UserInfo, UserInfoAdmin)
 admin.site.register(InvestigationQuestions, InvestigationQuestionsAdmin)
 admin.site.register(mutipleQuestions, mutipleQuestionsAdmin)
 admin.site.register(manualQuestions, manualQuestionsAdmin)
+admin.site.register(Survey, SurveyAdmin)
 # admin.site.register(Comments, CommentsAdmin)
 # admin.site.register(CommentRelations,CommentRelationsAdmin)
