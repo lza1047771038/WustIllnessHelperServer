@@ -37,6 +37,7 @@ urlpatterns = [
     url(r'^comment_post', views.post_comments),
     url(r'^reply_post', views.post_replies),
     url(r'^MediaFiles/(?P<path>.*)', serve, {'document_root': settings.MEDIA_ROOT}),
+    url(r'^staticfiles/(?P<path>.*)', serve, {'document_root': settings.STATIC_URL}),
     url(r'^Survey_Result',views.Survey_result),
     url(r'^Survey_List', views.Survey_List),
     url(r'^Survey_Response', views.Survey_Response),
