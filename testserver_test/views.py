@@ -211,11 +211,12 @@ def Survey_save(request):
         temp = Survey()
         temp.type = datetime.now().strftime("%Y%m%d")
         temp.title = parm.get('title')
+        temp.warning = parm.get('warning', '')
         temp.problem1 = parm.get('problem1', '')
         temp.problem2 = parm.get('problem2', '')
         temp.problem3 = parm.get('problem3', '')
 
-        header = ['序号','提交时间', '总时间(秒)']
+        header = ['序号', '提交时间', '总时间(秒)']
         if temp.problem1 is not '':
             header.append(temp.problem1)
             temp.problemOffset = 1
@@ -255,6 +256,7 @@ def Survey_result(request):
         if type is not None:
             # result = '{"index": "1","startTime": "20191028","totleTime": "219","1.": "A","2.": "B","3.": "C","4.": "A","5.": "D","6.": "E"}'
             result = json.loads(result)
+
             workbookreader = xlrd.open_workbook(BASE_DIR + '/MediaFiles/SurveyResult/' + str(type) + '.xls')
             worksheetreader = workbookreader.sheet_by_name('sheet1')
             workbook = copy(workbookreader)

@@ -122,6 +122,7 @@ class manualQuestions(models.Model):
 class Survey(models.Model):
     title = models.TextField()
     type = models.TextField()
+    warning = models.TextField(default='')
     problemOffset = models.TextField(default=0)
     problem1 = models.TextField(default='')
     problem2 = models.TextField(default='')
