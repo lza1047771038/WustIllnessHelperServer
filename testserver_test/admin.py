@@ -9,7 +9,7 @@ admin.site.site_title = '彩虹伞'
 
 class SurveyAdmin(admin.ModelAdmin):
     list_display = ('title', 'type', 'warning', 'problem1', 'problem2', 'problem3', 'problemOffset')
-    list_editable = ('title', 'type', 'warning', 'problem1', 'problem2', 'problem3')
+    list_editable = ('type', 'warning', 'problem1', 'problem2', 'problem3')
     list_per_page = 10  # 每页显示行数
     ordering = ('-type',)  # 排序，默认升序，前面加-则降序
     search_fields = ('title', 'type', 'warning')  # 显示搜索框，在搜索框内可通过指定字段进行搜索
