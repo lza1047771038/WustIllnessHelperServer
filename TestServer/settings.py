@@ -131,4 +131,4 @@ IMAGE_ROOT = os.path.join(MEDIA_ROOT, 'mediaImages/')
 # WEB_HOST_MEDIA_URL = os.path.join('http://127.0.0.1:8000', MEDIA_URL[1:], 'images/')
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
