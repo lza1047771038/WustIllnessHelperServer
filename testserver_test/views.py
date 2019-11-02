@@ -236,7 +236,7 @@ def NotificationList(request):
             books = paginator.page(paginator.num_pages)
         for item in books:
             image = UploadImage.objects.all().filter(themeid=item['themeid']).order_by('id').first()
-            user = UserInfo.objects.all().filter(userId=item['author_id_id']).order_by('id').first()
+            user = UserInfo.objects.all().filter(userId=item['author_id_id']).first()
             if image is not None:
                 item['image'] = image.getImageUrl()
             if user is not None:
