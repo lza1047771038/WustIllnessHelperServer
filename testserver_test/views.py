@@ -198,8 +198,8 @@ def post_replies(request):
 
 
 def Survey_List(request):
-    if request.method == 'GET':
-        parm = request.GET
+    if request.method == 'POST':
+        parm = request.POST
         data = {}
         temp = Survey.objects.all().order_by('-id').values()
 

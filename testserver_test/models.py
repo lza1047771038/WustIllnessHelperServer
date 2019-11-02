@@ -51,6 +51,7 @@ class UploadImage(models.Model):
 
 class UserInfo(models.Model):
     userId = models.BigIntegerField(primary_key=True)
+    userType = models.IntegerField()
     type = models.IntegerField()  # user类型  实验组，对照组
     userImagePath = models.TextField()
     username = models.CharField(max_length=10)
@@ -176,6 +177,19 @@ class CommentRelations(models.Model):  # 回复约束表
 class EducationalClass(models.Model):  # 课程板块
     themeid = models.CharField(max_length=10)
     filePath = models.TextField()  # 因为考虑到有题目，所以说在进行数据返回的时候，向单选的表中查询数据，查询条件就是这里的themeid
+
+    class Meta:
+        db_table = "EducationalClass"
+
+
+class Notification(models.Model):  # 推文板块
+    themeid = models.TextField(max_length=10)
+    contains = models.TextField()
+    author_id = models.ForeignKey('UserInfo', to_field='userId', on_delete='CASCADE')
+    post_time = models.TextField()
+
+    class Meta:
+        db_table = "Notification"
 
 # class SurveyResponseFromUser(models.Model):
 #     person_id = models.BigIntegerField()
