@@ -46,6 +46,7 @@ urlpatterns = [
     url(r'^AddSurveyInfos', views.Survey_save),
     url(r'^ImagesUpload', views.themeImageUpload),
     url(r'^NotificationList', views.NotificationList),
+    url(r'^NotificationPost', views.NotificationPost),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

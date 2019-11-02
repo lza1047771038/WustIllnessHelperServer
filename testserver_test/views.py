@@ -197,6 +197,22 @@ def post_replies(request):
         return HttpResponse(1)
 
 
+def NotificationPost(request):
+    if request.method == 'GET':
+        parm = request.GET
+        notification = Notification()
+        notification.themeid = 'NTF'+datetime.now().strftime("%Y%m%d%H%M%S")
+        notification.author_id_id = int(parm.get('authorid'))
+        notification.title = parm.get('title')
+        notification.contains = parm.get('contains')
+        notification.post_time = parm.get('posttime')
+        try:
+            notification.save()
+            return HttpResponse(1)
+        except Exception:
+            return HttpResponse(0)
+
+
 def NotificationList(request):
     if request.method == 'POST':
         parm = request.POST
