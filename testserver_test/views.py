@@ -198,8 +198,8 @@ def post_replies(request):
 
 
 def NotificationList(request):
-    if request.method == 'POST':
-        parm = request.POST
+    if request.method == 'GET':
+        parm = request.GET
         data = {}
         resultList = Notification.objects.all().order_by('-id').values()
         pagesize = 10
@@ -211,6 +211,9 @@ def NotificationList(request):
             books = paginator.page(1)
         except EmptyPage:
             books = paginator.page(paginator.num_pages)
+        for item in books:
+            image = UploadImage.objects.all().filter(themeid=item['themeid']).order_by('id').first()
+            item['image'] = image.getImageUrl()
         data['data'] = list(books)
         return JsonResponse(data)
 
