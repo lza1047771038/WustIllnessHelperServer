@@ -197,6 +197,24 @@ def post_replies(request):
         return HttpResponse(1)
 
 
+def NotificationList(request):
+    if request.method == 'POST':
+        parm = request.POST
+        data = {}
+        resultList = Notification.objects.all().order_by('-id').values()
+        pagesize = 10
+        page = parm.get('page', 1)
+        paginator = Paginator(resultList, pagesize)
+        try:
+            books = paginator.page(page)
+        except PageNotAnInteger:
+            books = paginator.page(1)
+        except EmptyPage:
+            books = paginator.page(paginator.num_pages)
+        data['data'] = list(books)
+        return JsonResponse(data)
+
+
 def Survey_List(request):
     if request.method == 'POST':
         parm = request.POST
@@ -215,9 +233,6 @@ def Survey_List(request):
         data['data'] = list(books)
 
         return JsonResponse(data)
-
-
-# def NotificationUpload(request):
 
 
 def Survey_save(request):

@@ -51,7 +51,7 @@ class UploadImage(models.Model):
 
 class UserInfo(models.Model):
     userId = models.BigIntegerField(primary_key=True)
-    userType = models.IntegerField()
+    userType = models.IntegerField(default=0)
     type = models.IntegerField()  # user类型  实验组，对照组
     userImagePath = models.TextField()
     username = models.CharField(max_length=10)
@@ -184,6 +184,7 @@ class EducationalClass(models.Model):  # 课程板块
 
 class Notification(models.Model):  # 推文板块
     themeid = models.TextField(max_length=10)
+    title = models.TextField()
     contains = models.TextField()
     author_id = models.ForeignKey('UserInfo', to_field='userId', on_delete='CASCADE')
     post_time = models.TextField()
