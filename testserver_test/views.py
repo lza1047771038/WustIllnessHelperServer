@@ -236,7 +236,8 @@ def NotificationList(request):
             books = paginator.page(paginator.num_pages)
         for item in books:
             image = UploadImage.objects.all().filter(themeid=item['themeid']).order_by('id').first()
-            item['image'] = image.getImageUrl()
+            if not image:
+                item['image'] = image.getImageUrl()
         data['data'] = list(books)
         return JsonResponse(data)
 
