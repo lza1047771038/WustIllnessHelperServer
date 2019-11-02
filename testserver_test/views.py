@@ -198,11 +198,26 @@ def post_replies(request):
 
 
 def Survey_List(request):
-    if request.method == 'POST':
+    if request.method == 'GET':
+        parm = request.GET
         data = {}
-        temp = Survey.objects.all().order_by('-id')
-        data['data'] = list(temp.values())
+        temp = Survey.objects.all().order_by('-id').values()
+
+        pagesize = 10
+        page = parm.get("page", 1)
+        paginator = Paginator(temp, pagesize)
+        try:
+            books = paginator.page(page)
+        except PageNotAnInteger:
+            books = paginator.page(1)
+        except EmptyPage:
+            books = paginator.page(paginator.num_pages)
+        data['data'] = list(books)
+
         return JsonResponse(data)
+
+
+# def NotificationUpload(request):
 
 
 def Survey_save(request):
