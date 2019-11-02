@@ -197,11 +197,18 @@ def post_replies(request):
         return HttpResponse(1)
 
 
+def queryForUserInfo(request):
+    if request.method == 'POST':
+        parm = request.POST
+        user = UserInfo.objects.all().filter(userId=parm.get('userid')).values().first()
+        return JsonResponse(list(user).__getitem__(0))
+
+
 def NotificationPost(request):
-    if request.method == 'GET':
-        parm = request.GET
+    if request.method == 'POST':
+        parm = request.POST
         notification = Notification()
-        notification.themeid = 'NTF'+datetime.now().strftime("%Y%m%d%H%M%S")
+        notification.themeid = 'NTF' + datetime.now().strftime("%Y%m%d%H%M%S")
         notification.author_id_id = int(parm.get('authorid'))
         notification.title = parm.get('title')
         notification.contains = parm.get('contains')
