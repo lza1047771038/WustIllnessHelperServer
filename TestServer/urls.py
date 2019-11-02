@@ -44,7 +44,7 @@ urlpatterns = [
     url(r'^AddMutipleQuestion', views.Survey_MutipleQuestion_Save),
     url(r'^AddManualQuestion', views.Survey_ManualQuestion_Save),
     url(r'^AddSurveyInfos', views.Survey_save),
-    url(r'^test', views.uploadImage),
+    url(r'^test', views.themeImageUpload),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
