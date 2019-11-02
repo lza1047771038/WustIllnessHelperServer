@@ -198,8 +198,8 @@ def post_replies(request):
 
 
 def NotificationList(request):
-    if request.method == 'GET':
-        parm = request.GET
+    if request.method == 'POST':
+        parm = request.POST
         data = {}
         resultList = Notification.objects.all().order_by('-id').values()
         pagesize = 10
