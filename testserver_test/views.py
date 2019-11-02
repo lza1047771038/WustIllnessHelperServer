@@ -200,7 +200,7 @@ def post_replies(request):
 def queryForUserInfo(request):
     if request.method == 'POST':
         parm = request.POST
-        user = UserInfo.objects.all().filter(userId=parm.get('userid')).values().first()
+        user = UserInfo.objects.all().filter(userId=int(parm.get('userid'))).values().first()
         return JsonResponse(list(user).__getitem__(0))
 
 
