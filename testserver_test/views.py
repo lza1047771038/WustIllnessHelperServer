@@ -201,7 +201,7 @@ def queryForUserInfo(request):
     if request.method == 'POST':
         parm = request.POST
         user = UserInfo.objects.all().filter(userId=int(parm.get('userid'))).values().first()
-        return JsonResponse(list(user).__getitem__(0))
+        return JsonResponse({list(user).__getitem__(0)})
 
 
 def NotificationPost(request):
