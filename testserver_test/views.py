@@ -252,10 +252,13 @@ def NotificationDetails(request):
         themeid = parm.get('themeid', None)
         if themeid is None:
             return HttpResponse('请输入themeid')
-        result = Notification.objects.all().filter(themeid=themeid).values().first()
-        data = json.load(list(result))
-        images = UploadImage.objects.all().filter(themeid=themeid).values()
-        data['imageUrl'] = list(images)
+        result = Notification.objects.all().filter(themeid=themeid).values()
+        data = list(result).__getitem__(0)
+        imagesinfo = UploadImage.objects.all().filter(themeid=themeid)
+        temp = []
+        for item in imagesinfo:
+            temp.append(item.getImageUrl())
+        data['imageUrl'] = list(temp)
         return JsonResponse(data)
 
 
