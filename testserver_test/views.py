@@ -247,8 +247,8 @@ def NotificationList(request):
 
 
 def NotificationDetails(request):
-    if request.method == 'GET':
-        parm = request.GET
+    if request.method == 'POST':
+        parm = request.POST
         themeid = parm.get('themeid', None)
         if themeid is None:
             return HttpResponse('请输入themeid')
