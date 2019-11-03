@@ -235,6 +235,7 @@ def NotificationList(request):
         except EmptyPage:
             books = paginator.page(paginator.num_pages)
         for item in books:
+            del item['contains']
             image = UploadImage.objects.all().filter(themeid=item['themeid']).order_by('id').first()
             user = UserInfo.objects.all().filter(userId=item['author_id_id']).first()
             if image is not None:
@@ -243,6 +244,11 @@ def NotificationList(request):
                 item['username'] = user.username
         data['data'] = list(books)
         return JsonResponse(data)
+
+def NotificationDetails(request):
+    if request.method == 'POST':
+        parm = request.POST
+
 
 
 def Survey_List(request):
