@@ -247,13 +247,24 @@ def NotificationList(request):
 
 
 def NotificationDetails(request):
-    if request.method == 'POST':
-        parm = request.POST
+    if request.method == 'GET':
+        parm = request.GET
         themeid = parm.get('themeid', None)
         if themeid is None:
             return HttpResponse('请输入themeid')
-        result = Notification.objects.all().filter(themeid=themeid).values()
-        data = list(result).__getitem__(0)
+        resultlist = Notification.objects.all().filter(themeid=themeid).values()
+        result = resultlist.first()
+        result['number'] = result['number'] + 1
+        object1 = Notification()
+        object1.id = result['id']
+        object1.themeid = result['themeid']
+        object1.title = result['title']
+        object1.contains = result['contains']
+        object1.author_id_id = result['author_id_id']
+        object1.post_time = result['post_time']
+        object1.number = result['number']
+        object1.save()
+        data = result
         imagesinfo = UploadImage.objects.all().filter(themeid=themeid)
         temp = []
         for item in imagesinfo:
