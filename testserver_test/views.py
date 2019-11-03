@@ -349,7 +349,7 @@ def Survey_result(request):
             workbook = copy(workbookreader)
             worksheet = workbook.get_sheet(0)
             result = json.loads(result)
-            result['id'] = 3
+            result['id'] = worksheetreader.nrows
             print(list(result.values()))
             for i in range(len(result)):
                 worksheet.write(worksheetreader.nrows, i, list(result.values()).__getitem__(i))
