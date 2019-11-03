@@ -245,10 +245,18 @@ def NotificationList(request):
         data['data'] = list(books)
         return JsonResponse(data)
 
+
 def NotificationDetails(request):
     if request.method == 'POST':
         parm = request.POST
-
+        themeid = parm.get('themeid', None)
+        if themeid is None:
+            return HttpResponse('请输入themeid')
+        result = Notification.objects.all().filter(themeid=themeid).values().first()
+        data = {list(result)}
+        images = UploadImage.objects.all().filter(themeid=themeid).values()
+        data['imageUrl'] = list(images)
+        return JsonResponse(data)
 
 
 def Survey_List(request):

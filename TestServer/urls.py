@@ -47,6 +47,7 @@ urlpatterns = [
     url(r'^ImagesUpload', views.themeImageUpload),
     url(r'^NotificationList', views.NotificationList),
     url(r'^NotificationPost', views.NotificationPost),
+    url(r'^NotificationDetails', views.NotificationDetails),
     url(r'^queryForUserInfo', views.queryForUserInfo),
 ]
 
