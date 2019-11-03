@@ -253,7 +253,7 @@ def NotificationDetails(request):
         if themeid is None:
             return HttpResponse('请输入themeid')
         result = Notification.objects.all().filter(themeid=themeid).values().first()
-        data = {list(result)}
+        data = json.load(list(result))
         images = UploadImage.objects.all().filter(themeid=themeid).values()
         data['imageUrl'] = list(images)
         return JsonResponse(data)
