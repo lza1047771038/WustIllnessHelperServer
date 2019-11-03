@@ -337,8 +337,8 @@ def Survey_save(request):
 
 
 def Survey_result(request):
-    if request.method == 'POST':
-        parm = request.POST
+    if request.method == 'GET':
+        parm = request.GET
         type = parm.get('type', None)
         result = parm.get('result', '{'':''}')
         print(result)
@@ -348,7 +348,7 @@ def Survey_result(request):
             worksheetreader = workbookreader.sheet_by_name('sheet1')
             workbook = copy(workbookreader)
             worksheet = workbook.get_sheet(0)
-            result['id'] = str(worksheetreader.nrows)
+            result['id'] = worksheetreader.nrows
             result = json.loads(result)
             print(list(result.values()))
             for i in range(len(result)):
