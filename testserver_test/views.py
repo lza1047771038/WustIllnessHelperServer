@@ -344,11 +344,11 @@ def Survey_result(request):
         if type is not None:
             # result = '{"index": "1","startTime": "20191028","totleTime": "219","1.": "A","2.": "B","3.": "C","4.": "A","5.": "D","6.": "E"}'
             result = json.loads(result)
-
             workbookreader = xlrd.open_workbook(BASE_DIR + '/MediaFiles/SurveyResult/' + str(type) + '.xls')
             worksheetreader = workbookreader.sheet_by_name('sheet1')
             workbook = copy(workbookreader)
             worksheet = workbook.get_sheet(0)
+            result[0] = worksheetreader.nrows
             print(list(result.values()))
             for i in range(len(result)):
                 worksheet.write(worksheetreader.nrows, i, list(result.values()).__getitem__(i))
