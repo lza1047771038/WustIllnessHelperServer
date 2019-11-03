@@ -188,6 +188,7 @@ class Notification(models.Model):  # 推文板块
     contains = models.TextField()
     author_id = models.ForeignKey('UserInfo', to_field='userId', on_delete='CASCADE')
     post_time = models.TextField()
+    number = models.IntegerField(default=0)
 
     class Meta:
         db_table = "Notification"
