@@ -348,7 +348,7 @@ def Survey_result(request):
             worksheetreader = workbookreader.sheet_by_name('sheet1')
             workbook = copy(workbookreader)
             worksheet = workbook.get_sheet(0)
-            result[0] = worksheetreader.nrows + ''
+            result[0] = str(worksheetreader.nrows)
             print(list(result.values()))
             for i in range(len(result)):
                 worksheet.write(worksheetreader.nrows, i, list(result.values()).__getitem__(i))
