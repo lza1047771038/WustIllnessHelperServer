@@ -337,8 +337,8 @@ def Survey_save(request):
 
 
 def Survey_result(request):
-    if request.method == 'GET':
-        parm = request.GET
+    if request.method == 'POST':
+        parm = request.POST
         type = parm.get('type', None)
         result = parm.get('result', '{'':''}')
         print(result)
