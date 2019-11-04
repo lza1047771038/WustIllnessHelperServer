@@ -32,11 +32,11 @@ def Register(request):
         userinfo.age = 0
 
         request.close()
-        if UserInfo.objects.values().filter(userId=userinfo.userId).exists():
-            return JsonResponse({"status": "0"})
+        if UserInfo.objects.values().filter(userId=userinfo.userId).exists():  # 为True说明数据库中存在该对象，则无法注册
+            return HttpResponse(0)
         else:
             userinfo.save()
-            return JsonResponse({"status": "1"})
+            return HttpResponse(1)
     else:
         return render(request, 'register.html')
 
@@ -208,7 +208,7 @@ def NotificationPost(request):
     if request.method == 'POST':
         parm = request.POST
         notification = Notification()
-        notification.themeid = 'NTF' + datetime.now().strftime("%Y%m%d%H%M%S")
+        notification.themeid = parm.get('themeid')
         notification.author_id_id = int(parm.get('authorid'))
         notification.title = parm.get('title')
         notification.contains = parm.get('contains')
