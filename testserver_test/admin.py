@@ -11,7 +11,7 @@ class NotificationAdmin(admin.ModelAdmin):
     list_display = ('themeid', 'title', 'contains', 'post_time', 'author_id_id', 'number')
     list_editable = ('title', 'number')
     list_per_page = 20
-    ordering = ('-id')
+    ordering = ('-id',)
 
 
 class SurveyAdmin(admin.ModelAdmin):
