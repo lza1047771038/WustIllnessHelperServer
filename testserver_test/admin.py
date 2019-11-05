@@ -7,6 +7,13 @@ admin.site.site_header = '青春彩虹伞后台管理'
 admin.site.site_title = '彩虹伞'
 
 
+class NotificationAdmin(admin.ModelAdmin):
+    list_display = ('themeid', 'title', 'contains', 'post_time', 'author_id_id', 'number')
+    list_editable = ('title', 'number')
+    list_per_page = 20
+    ordering = ('-id')
+
+
 class SurveyAdmin(admin.ModelAdmin):
     list_display = ('title', 'type', 'warning', 'problem1', 'problem2', 'problem3', 'problemOffset')
     list_editable = ('type', 'warning', 'problem1', 'problem2', 'problem3')
@@ -69,5 +76,6 @@ admin.site.register(InvestigationQuestions, InvestigationQuestionsAdmin)
 admin.site.register(mutipleQuestions, mutipleQuestionsAdmin)
 admin.site.register(manualQuestions, manualQuestionsAdmin)
 admin.site.register(Survey, SurveyAdmin)
+admin.site.register(Notification, NotificationAdmin)
 # admin.site.register(Comments, CommentsAdmin)
 # admin.site.register(CommentRelations,CommentRelationsAdmin)
