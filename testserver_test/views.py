@@ -221,6 +221,7 @@ def NotificationPost(request):
         notification.contains = parm.get('contains')
         notification.post_time = parm.get('posttime')
         notification.headerimage = parm.get('headerimage')
+        print(parm.get('headerimage'))
         try:
             notification.save()
             return HttpResponse(1)
