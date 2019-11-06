@@ -189,7 +189,7 @@ class Notification(models.Model):  # 推文板块
     author_id = models.ForeignKey('UserInfo', to_field='userId', on_delete='CASCADE')
     post_time = models.TextField()
     number = models.IntegerField(default=0)
-    headerimage = models.TextField(default='')
+    headerimage = models.TextField(null=True)
 
     class Meta:
         db_table = "Notification"
