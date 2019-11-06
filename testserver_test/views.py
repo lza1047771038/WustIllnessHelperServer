@@ -101,26 +101,33 @@ def Theme_Response(request):
             books = paginator.page(1)
         except EmptyPage:
             books = paginator.page(paginator.num_pages)
+        for item in books:
+            userinfo = UserInfo.objects.all().filter(userId=item['author_id_id']).first()
+            item['username'] = userinfo.username
+            item['userimage'] = userinfo.userImagePath
         data['theme'] = list(books)
         return JsonResponse(data)
 
 
-def Comment_Response(request):
-    if request.method == 'POST':
-        parm = request.POST
+def Comment_Response(request):  # 评论拉取完成
+    if request.method == 'GET':
+        parm = request.GET
         data = {}
         pagesize = parm.get("pagesize", 10)
         page = parm.get("page", 1)
         result = Comments.objects.all().filter(
             theme_id=parm.get("themeid")).order_by("-id").values()
         paginator = Paginator(result, pagesize)
-        data['total'] = paginator.count
         try:
             books = paginator.page(page)
         except PageNotAnInteger:
             books = paginator.page(1)
         except EmptyPage:
             books = paginator.page(paginator.num_pages)
+        for item in books:
+            userinfo = UserInfo.objects.all().filter(userId=item['person_id']).first()
+            item['username'] = userinfo.username
+            item['userimage'] = userinfo.userImagePath
         data['comments'] = list(books)
         return JsonResponse(data)
 
@@ -162,7 +169,7 @@ def post_themes(request):
         return HttpResponse(1)
 
 
-def post_comments(request):
+def post_comments(request):  # 提交评论（回复帖子/推文）
     if request.method == "POST":
         parm = request.POST
         comments = Comments()
@@ -176,7 +183,7 @@ def post_comments(request):
         return HttpResponse(1)
 
 
-def post_replies(request):
+def post_replies(request):  # 提交回复（回复评论）
     if request.method == "POST":
         parm = request.POST
         comments = Comments()
