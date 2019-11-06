@@ -233,11 +233,8 @@ def NotificationPost(request):
         notification.headerimage = parm.get('headerimage')
         notification.type = parm.get('type',0)
         print(notification.contains)
-        try:
-            notification.save()
-            return HttpResponse(1)
-        except Exception:
-            return HttpResponse(0)
+        notification.save()
+        return HttpResponse(1)
 
 
 def NotificationList(request):
