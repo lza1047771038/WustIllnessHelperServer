@@ -133,24 +133,32 @@ def Comment_Response(request):  # 评论拉取完成
 
 
 def reply_response(request):
-    if request.method == 'POST':
-        parm = request.POST
-        racks = CommentRelations.objects.filter(root=parm.get("userid"))
+    if request.method == 'GET':
+        parm = request.GET
+        # 根据root对象的userid和当前楼主评论的id查找评论关系表中的数据，然后从评论表中找到对应的评论，封装成json
+        racks = CommentRelations.objects.filter(root=parm.get("root"),
+                                                commentrelations_id_id=parm.get('id'))
 
+        print(list(racks.values_list('child_id', flat=True)))
         result = Comments.objects.all().filter(person_id__in=list(racks.values_list('child_id', flat=True)),
-                                               theme_id=None).order_by('-commentrelations').values()
+                                               theme_id=None).order_by('-id').values()
         data = {}
-
+        print(result.count())
         pagesize = parm.get("pagesize", 10)
         page = parm.get("page", 1)
         paginator = Paginator(result, pagesize)
-        data['total'] = paginator.count
         try:
             books = paginator.page(page)
         except PageNotAnInteger:
             books = paginator.page(1)
         except EmptyPage:
             books = paginator.page(paginator.num_pages)
+        for item in books:
+            ss = UserInfo.objects.all().filter(userId=item['person_id']).first()
+            print(item['person_id'])
+            if ss is not None:
+                item['username'] = ss.username
+                item['userimage'] = ss.userImagePath
         data['reply'] = list(books)
         return JsonResponse(data)
 
@@ -174,6 +182,7 @@ def post_comments(request):  # 提交评论（回复帖子/推文）
         parm = request.POST
         comments = Comments()
         comments.theme_id = parm.get("themeid")
+        comments.time = datetime.strftime("%Y%m%d%H%M%S")
         comments.person_id = parm.get('userid')
         comments.contains = parm.get('contains')
         comments.likes = 0
@@ -184,12 +193,12 @@ def post_comments(request):  # 提交评论（回复帖子/推文）
 
 
 def post_replies(request):  # 提交回复（回复评论）
-    if request.method == "GET":
-        parm = request.GET
+    if request.method == "POST":
+        parm = request.POST
         comments = Comments()
-        comments.theme_id = parm.get("themeid")
         comments.person_id = parm.get("userid")
         comments.contains = parm.get("contains")
+        comments.time = datetime.strftime("%Y%m%d%H%M%S")
         comments.likes = 0
         comments.replies = 0
         comments.comments_num = 0
