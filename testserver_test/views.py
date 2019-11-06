@@ -264,7 +264,7 @@ def NotificationDetails(request):
         result = Notification.objects.filter(themeid=themeid).first()
         result.number = result.number + 1
         result.save()
-        data=result.values()
+        data = dict(result)
         imagesinfo = UploadImage.objects.all().filter(themeid=themeid)
         temp = []
         for item in imagesinfo:
