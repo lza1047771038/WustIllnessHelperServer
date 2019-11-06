@@ -110,8 +110,8 @@ def Theme_Response(request):
 
 
 def Comment_Response(request):  # 评论拉取完成
-    if request.method == 'GET':
-        parm = request.GET
+    if request.method == 'POST':
+        parm = request.POST
         data = {}
         pagesize = parm.get("pagesize", 10)
         page = parm.get("page", 1)
@@ -133,8 +133,8 @@ def Comment_Response(request):  # 评论拉取完成
 
 
 def reply_response(request):
-    if request.method == 'GET':
-        parm = request.GET
+    if request.method == 'POST':
+        parm = request.POST
         # 根据root对象的userid和当前楼主评论的id查找评论关系表中的数据，然后从评论表中找到对应的评论，封装成json
         racks = CommentRelations.objects.filter(root=parm.get("root"),
                                                 commentrelations_id_id=parm.get('id'))
@@ -231,7 +231,7 @@ def NotificationPost(request):
         notification.contains = parm.get('contains')
         notification.post_time = parm.get('posttime')
         notification.headerimage = parm.get('headerimage')
-        notification.type = parm.get('type')
+        notification.type = parm.get('type',0)
         print(parm.get('headerimage'))
         try:
             notification.save()
