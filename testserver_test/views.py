@@ -232,7 +232,7 @@ def NotificationPost(request):
         notification.post_time = parm.get('posttime')
         notification.headerimage = parm.get('headerimage')
         notification.type = parm.get('type',0)
-        print(parm.get('headerimage'))
+        print(notification)
         try:
             notification.save()
             return HttpResponse(1)
