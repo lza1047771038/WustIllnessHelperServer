@@ -228,7 +228,7 @@ def NotificationPost(request):
         parm = request.POST
         notification = Notification()
         notification.themeid = parm.get('themeid')
-        notification.author_id_id_id = int(parm.get('authorid'))
+        notification.author_id_id = int(parm.get('authorid'))
         notification.title = parm.get('title')
         notification.contains = parm.get('contains')
         notification.post_time = parm.get('posttime')
