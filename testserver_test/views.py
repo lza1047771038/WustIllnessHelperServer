@@ -28,6 +28,8 @@ def Register(request):
         userinfo.userId = parm.get("userid", "null")
         userinfo.password = parm.get("password", "null")
         userinfo.userImagePath = "null"
+        userinfo.type = 0
+        userinfo.userType = 0
         userinfo.coin = 0
         userinfo.age = 0
 
@@ -226,12 +228,12 @@ def NotificationPost(request):
         parm = request.POST
         notification = Notification()
         notification.themeid = parm.get('themeid')
-        notification.author_id_id = int(parm.get('authorid'))
+        notification.author_id_id_id = int(parm.get('authorid'))
         notification.title = parm.get('title')
         notification.contains = parm.get('contains')
         notification.post_time = parm.get('posttime')
         notification.headerimage = parm.get('headerimage')
-        notification.type = parm.get('type',0)
+        notification.type = parm.get('type', 0)
         print(notification.contains)
         notification.save()
         return HttpResponse(1)
