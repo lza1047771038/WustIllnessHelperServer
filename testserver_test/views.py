@@ -184,10 +184,9 @@ def post_comments(request):  # 提交评论（回复帖子/推文）
 
 
 def post_replies(request):  # 提交回复（回复评论）
-    if request.method == "POST":
-        parm = request.POST
+    if request.method == "GET":
+        parm = request.GET
         comments = Comments()
-        relations = CommentRelations()
         comments.theme_id = parm.get("themeid")
         comments.person_id = parm.get("userid")
         comments.contains = parm.get("contains")
@@ -195,12 +194,14 @@ def post_replies(request):  # 提交回复（回复评论）
         comments.replies = 0
         comments.comments_num = 0
 
-        relations.root = parm.get("root")
-        relations.parent_id = parm.get("parentid")
-        relations.child_id = parm.get("userid")
+        relations = CommentRelations(commentrelations_id_id=parm.get('id'), root=parm.get("root"),
+                                     parent_id=parm.get("parentid"), child_id=parm.get("userid"))
 
         comments.save()
         relations.save()
+        temp = Comments.objects.filter(id=parm.get('id')).first()
+        temp.replies = temp.replies + 1
+        temp.save()
         return HttpResponse(1)
 
 
@@ -221,6 +222,7 @@ def NotificationPost(request):
         notification.contains = parm.get('contains')
         notification.post_time = parm.get('posttime')
         notification.headerimage = parm.get('headerimage')
+        notification.type = parm.get('type')
         print(parm.get('headerimage'))
         try:
             notification.save()
@@ -259,19 +261,9 @@ def NotificationDetails(request):
         themeid = parm.get('themeid', None)
         if themeid is None:
             return HttpResponse('请输入themeid')
-        resultlist = Notification.objects.all().filter(themeid=themeid).values()
-        result = resultlist.first()
-        result['number'] = result['number'] + 1
-        object1 = Notification()
-        object1.id = result['id']
-        object1.themeid = result['themeid']
-        object1.title = result['title']
-        object1.contains = result['contains']
-        object1.author_id_id = result['author_id_id']
-        object1.post_time = result['post_time']
-        object1.number = result['number']
-        object1.headerimage = result['headerimage']
-        object1.save()
+        result = Notification.objects.filter(themeid=themeid).first()
+        result.number = result.number + 1
+        result.save()
         data = result
         imagesinfo = UploadImage.objects.all().filter(themeid=themeid)
         temp = []

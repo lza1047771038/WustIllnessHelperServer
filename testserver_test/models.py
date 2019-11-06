@@ -190,6 +190,7 @@ class Notification(models.Model):  # 推文板块
     post_time = models.TextField()
     number = models.IntegerField(default=0)
     headerimage = models.TextField(null=True)
+    type = models.IntegerField(default=0)
 
     class Meta:
         db_table = "Notification"
