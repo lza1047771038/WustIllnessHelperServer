@@ -165,8 +165,7 @@ class Comments(models.Model):
 
 
 class CommentRelations(models.Model):  # 回复约束表
-    commentrelations_id = models.ForeignKey('Comments', to_field='id', on_delete='CASCADE', primary_key=True,
-                                            unique=True)
+    commentrelations_id = models.ForeignKey('Comments', to_field='id', on_delete='CASCADE', primary_key=True)
     root = models.BigIntegerField()  # 所有评论的根评论
     parent_id = models.BigIntegerField()  # 这两个作为外键指向userid，用来区分回复关系的
     child_id = models.BigIntegerField()
