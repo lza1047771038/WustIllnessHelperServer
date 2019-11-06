@@ -248,6 +248,7 @@ def NotificationList(request):
             user = UserInfo.objects.all().filter(userId=item['author_id_id']).first()
             if user is not None:
                 item['username'] = user.username
+            print(item['headerimage'])
         data['data'] = list(books)
         return JsonResponse(data)
 
