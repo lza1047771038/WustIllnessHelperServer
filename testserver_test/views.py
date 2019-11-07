@@ -244,7 +244,7 @@ def NotificationList(request):
         parm = request.POST
         data = {}
         resultList = Notification.objects.all().order_by('-id').values()
-        pagesize = 10
+        pagesize = 20
         page = parm.get('page', 1)
         paginator = Paginator(resultList, pagesize)
         try:
