@@ -281,6 +281,7 @@ def NotificationDetails(request):
         object1.post_time = result['post_time']
         object1.number = result['number']
         object1.headerimage = result['headerimage']
+        object1.type = result['type']
         object1.save()
         data = result
         imagesinfo = UploadImage.objects.all().filter(themeid=themeid)
