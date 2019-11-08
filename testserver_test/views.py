@@ -5,6 +5,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import JsonResponse
 from django.shortcuts import HttpResponse, render
 import datetime
+import time
 import xlwt
 import xlrd
 from xlutils.copy import copy
@@ -184,7 +185,7 @@ def post_comments(request):  # 提交评论（回复帖子/推文）
         parm = request.POST
         comments = Comments()
         comments.theme_id = parm.get("themeid")
-        comments.time = datetime.now().strftime("%Y%m%d%H%M%S")
+        comments.time = int(round(time.time() * 1000))
         comments.person_id = parm.get('userid')
         comments.contains = parm.get('contains')
         comments.likes = 0
@@ -200,7 +201,7 @@ def post_replies(request):  # 提交回复（回复评论）
         comments = Comments()
         comments.person_id = parm.get("userid")
         comments.contains = parm.get("contains")
-        comments.time = datetime.now().strftime("%Y%m%d%H%M%S")
+        comments.time = int(round(time.time() * 1000))
         comments.likes = 0
         comments.replies = 0
         comments.comments_num = 0
