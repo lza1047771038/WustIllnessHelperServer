@@ -184,7 +184,7 @@ def post_comments(request):  # 提交评论（回复帖子/推文）
         parm = request.POST
         comments = Comments()
         comments.theme_id = parm.get("themeid")
-        comments.time = datetime.strftime("%Y%m%d%H%M%S")
+        comments.time = datetime.now().strftime("%Y%m%d%H%M%S")
         comments.person_id = parm.get('userid')
         comments.contains = parm.get('contains')
         comments.likes = 0
@@ -200,7 +200,7 @@ def post_replies(request):  # 提交回复（回复评论）
         comments = Comments()
         comments.person_id = parm.get("userid")
         comments.contains = parm.get("contains")
-        comments.time = datetime.strftime("%Y%m%d%H%M%S")
+        comments.time = datetime.now().strftime("%Y%m%d%H%M%S")
         comments.likes = 0
         comments.replies = 0
         comments.comments_num = 0
