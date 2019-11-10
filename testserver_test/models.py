@@ -158,7 +158,6 @@ class Comments(models.Model):
     contains = models.TextField()  # 内容
     likes = models.IntegerField()  # 点赞数
     replies = models.IntegerField()  # 评论回复数
-    comments_num = models.IntegerField()
     root = models.BigIntegerField(default=0)  # 所有评论的根评论
     parent_id = models.BigIntegerField(default=0)  # 这两个作为外键指向userid，用来区分回复关系的
     child_id = models.BigIntegerField(default=0)
@@ -166,6 +165,7 @@ class Comments(models.Model):
 
     class Meta:
         db_table = "Comments"
+        verbose_name = "回复表"
 
 
 class CommentRelations(models.Model):  # 回复约束表
@@ -184,6 +184,7 @@ class EducationalClass(models.Model):  # 课程板块
 
     class Meta:
         db_table = "EducationalClass"
+        verbose_name = "课程"
 
 
 class Notification(models.Model):  # 推文板块
@@ -198,6 +199,7 @@ class Notification(models.Model):  # 推文板块
 
     class Meta:
         db_table = "Notification"
+        verbose_name = "推文"
 
 # class SurveyResponseFromUser(models.Model):
 #     person_id = models.BigIntegerField()

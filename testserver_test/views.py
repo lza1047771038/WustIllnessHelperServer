@@ -187,7 +187,6 @@ def post_comments(request):  # 提交评论（回复帖子/推文）
         comments.contains = parm.get('contains')
         comments.likes = 0
         comments.replies = 0
-        comments.comments_num = 0
         comments.save()
         return HttpResponse(1)
 
