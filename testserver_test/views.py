@@ -145,7 +145,7 @@ def reply_response(request):
 
         print(list(racks.values_list('commentrelations_id_id', flat=True)))
 
-        result = Comments.objects.all().filter(id__in=list(racks.values_list('commentrelations_id_id', flat=True)),
+        result = Comments.objects.all().filter(commentrelations__in=list(racks.values_list('commentrelations_id_id', flat=True)),
                                                theme_id=None).order_by('-id').values()
         data = {}
         print(result.count())
