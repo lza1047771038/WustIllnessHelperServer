@@ -162,7 +162,7 @@ def reply_response(request):
             if ss is not None:
                 item['username'] = ss.username
                 item['userimage'] = ss.userImagePath
-        data['reply'] = list(books)
+        data['comments'] = list(books)
         return JsonResponse(data)
 
 
