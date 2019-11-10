@@ -152,7 +152,6 @@ class Theme(models.Model):
 
 
 class Comments(models.Model):
-    id = models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
     theme_id = models.TextField(null=True)
     time = models.TextField()
     person_id = models.BigIntegerField()
