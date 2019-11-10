@@ -141,9 +141,10 @@ def reply_response(request):
         # 根据root对象的userid和当前楼主评论的id查找评论关系表中的数据，然后从评论表中找到对应的评论，封装成json
         racks = CommentRelations.objects.filter(root=parm.get("root"),
                                                 commentrelations_id_id=parm.get('id'))
-        print(racks.count)
+        print(racks.count())
 
         print(list(racks.values_list('child_id', flat=True)))
+
         result = Comments.objects.all().filter(person_id__in=list(racks.values_list('commentrelations_id_id', flat=True)),
                                                theme_id=None).order_by('-id').values()
         data = {}
