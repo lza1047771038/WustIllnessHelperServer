@@ -143,7 +143,7 @@ def reply_response(request):
                                                 commentrelations_id_id=parm.get('id'))
         print(racks.count())
 
-        print(list(racks.values_list('child_id', flat=True)))
+        print(list(racks.values_list('commentrelations_id_id', flat=True)))
 
         result = Comments.objects.all().filter(person_id__in=list(racks.values_list('commentrelations_id_id', flat=True)),
                                                theme_id=None).order_by('-id').values()
