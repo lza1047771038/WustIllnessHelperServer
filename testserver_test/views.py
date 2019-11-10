@@ -139,14 +139,10 @@ def reply_response(request):
     if request.method == 'POST':
         parm = request.POST
         # 根据root对象的userid和当前楼主评论的id查找评论关系表中的数据，然后从评论表中找到对应的评论，封装成json
-        racks = CommentRelations.objects.filter(root=parm.get("root"),
-                                                commentrelations_id_id=parm.get('id'))
-        print(racks.count())
 
-        print(list(racks.values_list('commentrelations_id_id', flat=True)))
-
-        result = Comments.objects.all().filter(
+        result = Comments.objects.all().filter(target_id=parm.get('id'), root=parm.get('root'),
                                                theme_id=None).order_by('-id').values()
+
         data = {}
         print(result.count())
         pagesize = parm.get("pagesize", 10)
@@ -160,7 +156,6 @@ def reply_response(request):
             books = paginator.page(paginator.num_pages)
         for item in books:
             ss = UserInfo.objects.all().filter(userId=item['person_id']).first()
-            print(item['person_id'])
             if ss is not None:
                 item['username'] = ss.username
                 item['userimage'] = ss.userImagePath
@@ -207,12 +202,12 @@ def post_replies(request):  # 提交回复（回复评论）
         comments.likes = 0
         comments.replies = 0
         comments.comments_num = 0
-
-        relations = CommentRelations(commentrelations_id_id=parm.get('id'), root=parm.get("root"),
-                                     parent_id=parm.get("parentid"), child_id=parm.get("userid"))
-
+        comments.root = parm.get("root")
+        comments.target_id = parm.get('id')
+        comments.parent_id = parm.get("parentid")
+        comments.child_id = parm.get("userid")
         comments.save()
-        relations.save()
+
         temp = Comments.objects.filter(id=parm.get('id')).first()
         temp.replies = temp.replies + 1
         temp.save()

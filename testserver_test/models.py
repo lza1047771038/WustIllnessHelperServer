@@ -152,6 +152,7 @@ class Theme(models.Model):
 
 
 class Comments(models.Model):
+    id = models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
     theme_id = models.TextField(null=True)
     time = models.TextField()
     person_id = models.BigIntegerField()
@@ -159,6 +160,10 @@ class Comments(models.Model):
     likes = models.IntegerField()  # 点赞数
     replies = models.IntegerField()  # 评论回复数
     comments_num = models.IntegerField()
+    root = models.BigIntegerField(default=0)  # 所有评论的根评论
+    parent_id = models.BigIntegerField(default=0)  # 这两个作为外键指向userid，用来区分回复关系的
+    child_id = models.BigIntegerField(default=0)
+    target_id = models.BigIntegerField(default=0)
 
     class Meta:
         db_table = "Comments"
