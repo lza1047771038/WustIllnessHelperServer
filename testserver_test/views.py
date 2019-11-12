@@ -55,11 +55,9 @@ def UpdateInfo(request):  # 更新用户信息
             userinfo.coin = parm.get("coin")
             userinfo.save()
             request.close()
-            return JsonResponse({"status": "1",
-                                 "data": list(UserInfo.objects.values().filter(userId=parm.get("userid"))).__getitem__(
-                                     0)})
+            return JsonResponse(list(UserInfo.objects.values().filter(userId=parm.get("userid"))).__getitem__(0))
         else:
-            return JsonResponse({"status": "0"})
+            return HttpResponse(0)
     else:
         return render(request, "update.html")
 
@@ -80,7 +78,7 @@ def login(request):  # 判断请求方法
         new_userinfo.password = parm.get("password", 'null')
         request.close()
         select_person = UserInfo.objects.values().filter(userId=new_userinfo.userId,
-                                                                password=new_userinfo.password)
+                                                         password=new_userinfo.password)
         if select_person.exists():
             return JsonResponse({'status': '1', 'data': list(select_person).__getitem__(0)})
         else:
