@@ -58,6 +58,7 @@ class UserInfo(models.Model):
     password = models.TextField(max_length=20)
     age = models.IntegerField(default=0)
     coin = models.IntegerField(default=0)
+    phoneid = models.TextField(default='')
 
     class Meta:
         db_table = "UserInfo"
