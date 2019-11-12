@@ -79,7 +79,7 @@ def login(request):  # 判断请求方法
         new_userinfo.userId = parm.get("userid", "null")
         new_userinfo.password = parm.get("password", 'null')
         request.close()
-        select_person = models.UserInfo.objects.values().filter(userId=new_userinfo.userId,
+        select_person = UserInfo.objects.values().filter(userId=new_userinfo.userId,
                                                                 password=new_userinfo.password)
         if select_person.exists():
             return JsonResponse({'status': '1', 'data': list(select_person).__getitem__(0)})
