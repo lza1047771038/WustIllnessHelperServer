@@ -81,7 +81,7 @@
             <div class="form-group">
                     <label for="schoolname" class="control-label col-sm-4">学校名称</label>
                     <div class="col-sm-4">
-                        <input class="form-control" name="schoolname" id="schoolname" />
+                        <input class="form-control" name="schoolname" id="schoolname"  required/>
                     </div>
                 </div>
             <div class="form-group">
@@ -89,7 +89,7 @@
                 <div class="col-sm-4">
                     <label type="button" class="bstns">
                         <span>选择图片</span>
-                        <input type="file" accept="image/*" onchange="showImg(this)" name="img">
+                        <input type="file" accept="image/*" onchange="showImg(this)" name="img" multiple required>
                     </label>
                     <h3>以下为预览效果：</h3>
                     <img src="" alt="" id="img">

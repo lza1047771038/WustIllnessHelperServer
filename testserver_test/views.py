@@ -314,6 +314,7 @@ def uploadSchoolImage(request):
         parm = request.POST
         schoolimage = SchoolImage()
         schoolimage.name = parm.get('schoolname')
+        print(schoolimage.name)
         file = request.FILES.getlist('img')
         themeid = parm.get('themeid', None)
         for image in file:
