@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'^comment_request', views.Comment_Response),
     url(r'^reply_request', views.reply_response),
     url(r'^theme_post', views.post_themes),
+    url(r'^uploadSchoolImages', views.uploadSchoolImage),
     url(r'^comment_post', views.post_comments),
     url(r'^reply_post', views.post_replies),
     url(r'^MediaFiles/(?P<path>.*)', serve, {'document_root': settings.MEDIA_ROOT}),
