@@ -312,7 +312,6 @@ def uploadSchoolImage(request):
     imagelist = []
     if request.method == 'POST':
         parm = request.POST
-        schoolimage = SchoolImage()
         file = request.FILES.getlist('img')
         themeid = parm.get('themeid', None)
         for image in file:
@@ -350,7 +349,8 @@ def uploadSchoolImage(request):
             try:
                 uploadImg.save()  # 插入数据库
 
-                schoolimage.name = parm.get('name')
+                schoolimage = SchoolImage()
+                schoolimage.name = parm.get('schoolname')
                 schoolimage.imagepath = uploadImg.getImageUrl()
                 schoolimage.save()
 
