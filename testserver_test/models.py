@@ -48,6 +48,12 @@ class UploadImage(models.Model):
             + " - " + "filesize:" + str(self.file_size) + " - " + "filemd5:" + str(self.file_md5)
         return s
 
+class SchoolImage(models.Model):
+    name = models.CharField(max_length=20)
+    imagepath = models.TextField()
+    class Meta:
+        db_table = "SchoolImages"
+        verbose_name = "学校校徽"
 
 class UserInfo(models.Model):
     userId = models.BigIntegerField(primary_key=True)
