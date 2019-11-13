@@ -315,59 +315,47 @@ def uploadSchoolImage(request):
         schoolimage = SchoolImage()
         schoolimage.name = parm.get('schoolname')
         print(schoolimage.name)
-        file = request.FILES.getlist('img')
-        themeid = parm.get('themeid', None)
-        for image in file:
+        file = request.FILES.get('img')
+        print(file.name)
 
-            # 检查文件是否存在
-            if not image:
-                return HttpResponse("need Files.")
+        if not file:
+            return HttpResponse("need Files.")
 
-            # 检查文件大小
-            if not pIsAllowedFileSize(image.size):
-                return HttpResponse("文件太大，每个图片大小不超过1M")
+        # 检查文件大小
+        if not pIsAllowedFileSize(file.size):
+            return HttpResponse("文件太大，每个图片大小不超过1M")
+
+
+        # 获取扩展类型 并 判断
+        ext = pGetFileExtension(file)
+        if not pIsAllowedImageType(ext):
+            return HttpResponse("文件类型错误")
 
             # 检查md5
-            md5 = pCalculateMd5(image)
-            uploadImg = UploadImage.getImageByMd5(md5)
-            if uploadImg:  # 图片文件已存在
-                uploadImg.themeid = themeid
-                uploadImg.save()
-                schoolimage.imagepath = uploadImg.getImageUrl()
-                schoolimage.save()
-                imagelist.append(uploadImg.getImageUrl())
-                continue
+        md5 = pCalculateMd5(file)
+        uploadImg = UploadImage.getImageByMd5(md5)
+        if uploadImg:  # 图片文件已存在
+            schoolimage.imagepath=uploadImg.getImageUrl()
+            schoolimage.save()
+            return HttpResponse("图片已保存")
 
-            # 获取扩展类型 并 判断
-            ext = pGetFileExtension(image)
-            if not pIsAllowedImageType(ext):
-                return HttpResponse("文件类型错误")
+        uploadImg = UploadImage()
+        uploadImg.file_md5 = md5
+        uploadImg.file_size = file.size
+        uploadImg.file_type = ext
+        uploadImg.save()
+        schoolimage.imagepath = uploadImg.getImageUrl()
+        schoolimage.save()
 
-            # 检测通过 创建新的image对象
-            # 文件对象即上一小节的UploadImage模型
-            uploadImg = UploadImage()
-            uploadImg.themeid = themeid
-            uploadImg.filename = image.name
-            uploadImg.file_size = image.size
-            uploadImg.file_md5 = md5
-            uploadImg.file_type = ext
-            try:
-                uploadImg.save()  # 插入数据库
+        # 打印绝对地址
+        print(uploadImg.getImageUrl())
+        # 保存 文件到磁盘
+        with open(uploadImg.getImagePath(), "wb+") as f:
+            # 分块写入
+            for chunk in file.chunks():
+                f.write(chunk)
+            f.close()
 
-                schoolimage.imagepath = uploadImg.getImageUrl()
-                schoolimage.save()
-
-                # 打印绝对地址
-                print(uploadImg.getImageUrl())
-                # 保存 文件到磁盘
-                with open(uploadImg.getImagePath(), "wb+") as f:
-                    # 分块写入
-                    for chunk in image.chunks():
-                        f.write(chunk)
-                    f.close()
-            except Exception:
-                return HttpResponse("保存或写入文件失败")
-        return HttpResponse(1)
     return render(request, 'AddSchoolImage.html')
 
 

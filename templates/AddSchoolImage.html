@@ -70,7 +70,7 @@
     <br />
     <br />
     <div class="container body-content form-group">
-        <form action="http://47.100.93.91:8996/uploadSchoolImages" class="form-horizontal" method="post">
+        <form action="" class="form-horizontal" method="POST" enctype="multipart/form-data">
             <hr />
             <hr />
             <h1 style="font-size: 30px;" class="form-group">
@@ -89,7 +89,7 @@
                 <div class="col-sm-4">
                     <label type="button" class="bstns">
                         <span>选择图片</span>
-                        <input type="file" accept="image/*" onchange="showImg(this)" name="img" multiple required>
+                        <input type="file" accept="image/*" onchange="showImg(this)" name="img" required>
                     </label>
                     <h3>以下为预览效果：</h3>
                     <img src="" alt="" id="img">
