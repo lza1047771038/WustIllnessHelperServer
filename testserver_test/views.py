@@ -51,6 +51,7 @@ def UpdateInfo(request):  # 更新用户信息
         if user.exists():
             userinfo = user.first()
             userinfo.username = parm.get("username")
+            userinfo.userImagePath = parm.get('userimagepath')
             userinfo.age = parm.get("age")
             userinfo.coin = parm.get("coin")
             userinfo.save()
@@ -82,7 +83,7 @@ def login(request):  # 判断请求方法
         if select_person.exists():
             return JsonResponse({'status': '1', 'data': list(select_person).__getitem__(0)})
         else:
-            return JsonResponse({"status": "0", "data": "null"})
+            return HttpResponse(0)
     else:
         return render(request, 'login.html')
 
