@@ -309,7 +309,6 @@ def Survey_List(request):
 
 
 def uploadSchoolImage(request):
-    imagelist = []
     if request.method == 'POST':
         parm = request.POST
         schoolimage = SchoolImage()
@@ -325,7 +324,6 @@ def uploadSchoolImage(request):
         if not pIsAllowedFileSize(file.size):
             return HttpResponse("文件太大，每个图片大小不超过1M")
 
-
         # 获取扩展类型 并 判断
         ext = pGetFileExtension(file)
         if not pIsAllowedImageType(ext):
@@ -335,7 +333,7 @@ def uploadSchoolImage(request):
         md5 = pCalculateMd5(file)
         uploadImg = UploadImage.getImageByMd5(md5)
         if uploadImg:  # 图片文件已存在
-            schoolimage.imagepath=uploadImg.getImageUrl()
+            schoolimage.imagepath = uploadImg.getImageUrl()
             schoolimage.save()
             return HttpResponse("图片已保存")
 
