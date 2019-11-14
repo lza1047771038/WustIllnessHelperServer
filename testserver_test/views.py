@@ -1,20 +1,17 @@
+import datetime
 import hashlib
-import os
+import json
+import time
 
+import xlrd
+import xlwt
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import JsonResponse
 from django.shortcuts import HttpResponse, render
-import datetime
-import time
-import xlwt
-import xlrd
-from xlutils.copy import copy
-import json
-
 from filetype import filetype
+from xlutils.copy import copy
 
 from TestServer.settings import BASE_DIR
-from testserver_test import models
 from testserver_test.models import *
 
 
@@ -308,7 +305,7 @@ def Survey_List(request):
         return JsonResponse(data)
 
 
-def uploadSchoolImage(request):
+def uploadSchoolImage(request):     # 上传校徽
     if request.method == 'POST':
         parm = request.POST
         schoolimage = SchoolImage()
