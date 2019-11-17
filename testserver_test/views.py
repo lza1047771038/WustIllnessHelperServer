@@ -69,8 +69,8 @@ def getUserInfo(request):
 
 
 def login(request):  # 判断请求方法
-    if request.method == 'GET':
-        parm = request.GET
+    if request.method == 'POST':
+        parm = request.POST
         new_userinfo = UserInfo()
         new_userinfo.userId = parm.get("userid", "null")
         new_userinfo.password = parm.get("password", 'null')
