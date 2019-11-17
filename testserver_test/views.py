@@ -48,7 +48,7 @@ def UpdateInfo(request):  # 更新用户信息
         if user.exists():
             userinfo = user.first()
             userinfo.username = parm.get("username")
-            userinfo.userImagePath = parm.get('userimagepath')
+            userinfo.userImagePath = parm.get('userimagepath',"null")
             userinfo.age = parm.get("age")
             userinfo.coin = parm.get("coin")
             userinfo.save()
@@ -69,20 +69,24 @@ def getUserInfo(request):
 
 
 def login(request):  # 判断请求方法
-    if request.method == 'POST':
-        parm = request.POST
+    if request.method == 'GET':
+        parm = request.GET
         new_userinfo = UserInfo()
         new_userinfo.userId = parm.get("userid", "null")
         new_userinfo.password = parm.get("password", 'null')
         request.close()
-        select_person = UserInfo.objects.values().filter(userId=new_userinfo.userId,
-                                                         password=new_userinfo.password)
+        select_person = UserInfo.objects.filter(userId=new_userinfo.userId,
+                                                password=new_userinfo.password)
         if select_person.exists():
-            return JsonResponse({'status': '1', 'data': list(select_person).__getitem__(0)})
+            temp = select_person.first()        # 开一个额外的数据进行赋值，然后保存到数据库
+            temp.phoneid = parm.get('phoneid', 'null')
+            temp.save()
+            select_person.phoneid = parm.get('phoneid', 'null')     # 动态修改查询到的数据中的信息，方便及时保存
+            return JsonResponse({'data': list(select_person.values()).__getitem__(0)})
         else:
             return HttpResponse(0)
-    else:
-        return render(request, 'login.html')
+    # else:
+    #     return render(request, 'login.html')
 
 
 def Theme_Response(request):
@@ -305,7 +309,7 @@ def Survey_List(request):
         return JsonResponse(data)
 
 
-def uploadSchoolImage(request):     # 上传校徽
+def uploadSchoolImage(request):  # 上传校徽
     if request.method == 'POST':
         parm = request.POST
         schoolimage = SchoolImage()
