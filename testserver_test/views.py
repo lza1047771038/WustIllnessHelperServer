@@ -85,8 +85,8 @@ def login(request):  # 判断请求方法
             return JsonResponse({'data': list(select_person.values()).__getitem__(0)})
         else:
             return HttpResponse(0)
-    # else:
-    #     return render(request, 'login.html')
+    else:
+        return render(request, 'login.html')
 
 
 def Theme_Response(request):
