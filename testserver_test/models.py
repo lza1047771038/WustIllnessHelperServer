@@ -162,6 +162,7 @@ class Theme(models.Model):
 
 
 class Comments(models.Model):
+    id = models.CharField(max_length=20, default='',primary_key=True)
     theme_id = models.TextField(null=True)
     time = models.TextField()
     person_id = models.BigIntegerField()
@@ -210,6 +211,59 @@ class Notification(models.Model):  # 推文板块
     class Meta:
         db_table = "Notification"
         verbose_name = "推文"
+
+
+class Subjects(models.Model):
+    subjectid = models.CharField(max_length=20, primary_key=True, unique=True, auto_created=True)
+    subjecttitle = models.CharField(max_length=20)
+    titleimage = models.TextField()
+    submittime = models.CharField(max_length=20)
+
+    class Meta:
+        db_table = "Subjects"
+        verbose_name = "CBT课程科目"
+
+
+class ClassSection(models.Model):
+    classid = models.CharField(max_length=20, primary_key=True, unique=True, auto_created=True)
+    classname = models.CharField(max_length=20)
+    submittime = models.CharField(max_length=20)
+    filepath = models.TextField()
+    subjectid = models.ForeignKey('Subjects', to_field='subjectid', on_delete='CASCADE')
+
+    class Meta:
+        db_table = "Classes"
+        verbose_name = "CBT课程"
+
+
+class TestHomeWorkSingleChoice(models.Model):
+    id = models.CharField(max_length=20, primary_key=True, unique=True, auto_created=True)
+    title = models.CharField(max_length=50)
+    selectionA = models.CharField(max_length=50)
+    selectionB = models.CharField(max_length=50)
+    selectionC = models.CharField(max_length=50)
+    selectionD = models.CharField(max_length=50)
+    selectionE = models.CharField(max_length=50)
+    classid = models.ForeignKey('ClassSection', to_field='classid', on_delete='CASCADE')
+
+    class Meta:
+        db_table = "HomeWorksSingle"
+        verbose_name = "CBT课程单选作业"
+
+
+class TestHomeWorkMutipleChoice(models.Model):
+    id = models.CharField(max_length=20, primary_key=True, unique=True, auto_created=True)
+    title = models.CharField(max_length=50)
+    selectionA = models.CharField(max_length=50)
+    selectionB = models.CharField(max_length=50)
+    selectionC = models.CharField(max_length=50)
+    selectionD = models.CharField(max_length=50)
+    selectionE = models.CharField(max_length=50)
+    classid = models.ForeignKey('ClassSection', to_field='classid', on_delete='CASCADE')
+
+    class Meta:
+        db_table = "HomeWorksMutiple"
+        verbose_name = "CBT课程多选作业"
 
 # class SurveyResponseFromUser(models.Model):
 #     person_id = models.BigIntegerField()

@@ -44,11 +44,11 @@ def Register(request):
 def UpdateInfo(request):  # 更新用户信息
     if request.method == 'POST':
         parm = request.POST
-        user = UserInfo.objects.filter(userId=parm.get("userid"))
+        user = UserInfo.objects.filter(userId=parm.get("userid"), phoneid=parm.get('phoneid'))
         if user.exists():
             userinfo = user.first()
             userinfo.username = parm.get("username")
-            userinfo.userImagePath = parm.get('userimagepath',"null")
+            userinfo.userImagePath = parm.get('userimagepath', "null")
             userinfo.age = parm.get("age")
             userinfo.coin = parm.get("coin")
             userinfo.save()
@@ -74,17 +74,17 @@ def login(request):  # 判断请求方法
         new_userinfo = UserInfo()
         new_userinfo.userId = parm.get("userid", "null")
         new_userinfo.password = parm.get("password", 'null')
-        request.close()
+        new_userinfo.phoneid = parm.get("phoneid", "null")
         select_person = UserInfo.objects.filter(userId=new_userinfo.userId,
                                                 password=new_userinfo.password)
         if select_person.exists():
-            temp = select_person.first()        # 开一个额外的数据进行赋值，然后保存到数据库
+            temp = select_person.first()  # 开一个额外的数据进行赋值，然后保存到数据库
             temp.phoneid = parm.get('phoneid', 'null')
             temp.save()
-            select_person.phoneid = parm.get('phoneid', 'null')     # 动态修改查询到的数据中的信息，方便及时保存
+            select_person.phoneid = parm.get('phoneid', 'null')  # 动态修改查询到的数据中的信息，方便及时保存
             return JsonResponse({'data': list(select_person.values()).__getitem__(0)})
         else:
-            return HttpResponse(0)
+            return HttpResponse(0) # 此处返回则表示没有该用户
     else:
         return render(request, 'login.html')
 
@@ -180,36 +180,78 @@ def post_themes(request):
 def post_comments(request):  # 提交评论（回复帖子/推文）
     if request.method == "POST":
         parm = request.POST
-        comments = Comments()
-        comments.theme_id = parm.get("themeid")
-        comments.time = int(round(time.time() * 1000))
-        comments.person_id = parm.get('userid')
-        comments.contains = parm.get('contains')
-        comments.likes = 0
-        comments.replies = 0
-        comments.save()
-        return HttpResponse(1)
+        judge = UserInfo.objects.filter(userId=parm.get("userid"), phoneid=parm.get("phoneid"))
+        if judge.exists():
+            comments = Comments()
+            comments.id = parm.get("commentid")
+            comments.theme_id = parm.get("themeid")
+            comments.time = int(round(time.time() * 1000))
+            comments.person_id = parm.get('userid')
+            comments.contains = parm.get('contains')
+            comments.likes = 0
+            comments.replies = 0
+            comments.save()
+            return HttpResponse(1)
+        else:
+            # 账号异地登陆
+            return HttpResponse("账号异地登陆，请重新登录!")
 
 
 def post_replies(request):  # 提交回复（回复评论）
     if request.method == "POST":
         parm = request.POST
-        comments = Comments()
-        comments.person_id = parm.get("userid")
-        comments.contains = parm.get("contains")
-        comments.time = int(round(time.time() * 1000))
-        comments.likes = 0
-        comments.replies = 0
-        comments.comments_num = 0
-        comments.root = parm.get("root")
-        comments.target_id = parm.get('id')
-        comments.parent_id = parm.get("parentid")
-        comments.child_id = parm.get("userid")
-        comments.save()
 
-        temp = Comments.objects.filter(id=parm.get('id')).first()
-        temp.replies = temp.replies + 1
-        temp.save()
+        judge = UserInfo.objects.filter(userId=parm.get("userid"), phoneid=parm.get("phoneid"))
+        if judge.exists():
+            comments = Comments()
+            comments.id = parm.get("commentid")
+            comments.person_id = parm.get("userid")
+            comments.contains = parm.get("contains")
+            comments.time = int(round(time.time() * 1000))
+            comments.likes = 0
+            comments.replies = 0
+            comments.comments_num = 0
+            comments.root = parm.get("root")
+            comments.target_id = parm.get('id')
+            comments.parent_id = parm.get("parentid")
+            comments.child_id = parm.get("userid")
+            comments.save()
+
+            temp = Comments.objects.filter(id=parm.get('id')).first()
+            temp.replies = temp.replies + 1
+            temp.save()
+            return HttpResponse(1)
+        else:
+            # 账号异地登陆
+            return HttpResponse("账号异地登陆，请重新登录!")
+
+
+def SubjectsPost(request):
+    if request.method == 'POST':
+        parm = request.POST
+        subject = Subjects()
+        subject.subjectid = 'Sub' + str(int(round(time.time() * 1000)))
+        subject.subjecttitle = parm.get('title')
+        subject.submittime = str(int(round(time.time() * 1000)))
+        subject.titleimage = parm.get('imagepath')
+        try:
+            subject.save()
+            return HttpResponse(1)
+        except Exception:
+            return HttpResponse(0)
+
+
+def ClassSectionPost(request):
+    if request.method == 'GET':
+        parm = request.GET
+        classes = ClassSection()
+        classes.classid = 'CSec' + str(int(round(time.time() * 1000)))
+        classes.classname = parm.get('classname')
+        classes.filepath = parm.get('filepath')
+        classes.submittime = str(int(round(time.time() * 1000)))
+
+        classes.subjectid = Subjects(subjectid=parm.get('subjectid'))
+        classes.save()
         return HttpResponse(1)
 
 
@@ -223,17 +265,22 @@ def queryForUserInfo(request):
 def NotificationPost(request):
     if request.method == 'POST':
         parm = request.POST
-        notification = Notification()
-        notification.themeid = parm.get('themeid')
-        notification.author_id_id = int(parm.get('authorid'))
-        notification.title = parm.get('title')
-        notification.contains = parm.get('contains')
-        notification.post_time = parm.get('posttime')
-        notification.headerimage = parm.get('headerimage')
-        notification.type = parm.get('type', 0)
-        print(notification.contains)
-        notification.save()
-        return HttpResponse(1)
+        judge = UserInfo.objects.filter(userId=parm.get("userid"), phoneid=parm.get("phone"))
+        if judge.exists():
+            notification = Notification()
+            notification.themeid = parm.get('themeid')
+            notification.author_id_id = int(parm.get('authorid'))
+            notification.title = parm.get('title')
+            notification.contains = parm.get('contains')
+            notification.post_time = parm.get('posttime')
+            notification.headerimage = parm.get('headerimage')
+            notification.type = parm.get('type', 0)
+            print(notification.contains)
+            notification.save()
+            return HttpResponse(1)
+        else:
+            # 账号异地登陆
+            return HttpResponse("账号异地登陆，请重新登录!")
 
 
 def NotificationList(request):
