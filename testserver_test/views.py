@@ -84,7 +84,7 @@ def login(request):  # 判断请求方法
             select_person.phoneid = parm.get('phoneid', 'null')  # 动态修改查询到的数据中的信息，方便及时保存
             return JsonResponse({'data': list(select_person.values()).__getitem__(0)})
         else:
-            return HttpResponse(0) # 此处返回则表示没有该用户
+            return HttpResponse(0)  # 此处返回则表示没有该用户
     else:
         return render(request, 'login.html')
 
@@ -242,8 +242,8 @@ def SubjectsPost(request):
 
 
 def ClassSectionPost(request):
-    if request.method == 'GET':
-        parm = request.GET
+    if request.method == 'POST':
+        parm = request.POST
         classes = ClassSection()
         classes.classid = 'CSec' + str(int(round(time.time() * 1000)))
         classes.classname = parm.get('classname')
@@ -253,6 +253,22 @@ def ClassSectionPost(request):
         classes.subjectid = Subjects(subjectid=parm.get('subjectid'))
         classes.save()
         return HttpResponse(1)
+
+
+def uploadFiles(request):
+    if request.method == 'POST':
+        file = request.FILES.get('file')
+        if not file:
+            return HttpResponse('图片未上传')
+
+        ext = pGetFileExtension(file)
+        if not pIsAllowedFileType(ext):
+            return HttpResponse('文件类型错误')
+
+        md5 = pCalculateMd5(file)
+        uploadFile = UploadFiles.getImageByMd5(md5)
+        if uploadFile:  # 图片文件已存在
+            return JsonResponse({"path":uploadFile.getImageUrl()})
 
 
 def queryForUserInfo(request):
@@ -696,6 +712,13 @@ def pCalculateMd5(file):
 # 文件类型过滤 我们只允许上传常用的图片文件
 def pIsAllowedImageType(ext):
     if ext in ["png", "jpeg", "jpg", "bmp"]:
+        return True
+    return False
+
+
+# 文件类型过滤 我们只允许上传常用的图片文件
+def pIsAllowedFileType(ext):
+    if ext in ["ppt", "mp4", "pptx", "avi"]:
         return True
     return False
 
