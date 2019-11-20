@@ -194,7 +194,7 @@ def post_comments(request):  # 提交评论（回复帖子/推文）
             return HttpResponse(1)
         else:
             # 账号异地登陆
-            return HttpResponse("账号异地登陆，请重新登录!")
+            return HttpResponse(2)
 
 
 def post_replies(request):  # 提交回复（回复评论）
@@ -219,11 +219,14 @@ def post_replies(request):  # 提交回复（回复评论）
 
             temp = Comments.objects.filter(id=parm.get('id')).first()
             temp.replies = temp.replies + 1
-            temp.save()
-            return HttpResponse(1)
+            try:
+                temp.save()
+                return HttpResponse(1)
+            except Exception:
+                return HttpResponse(0)
         else:
             # 账号异地登陆
-            return HttpResponse("账号异地登陆，请重新登录!")
+            return HttpResponse(2)
 
 
 def SubjectsPost(request):
