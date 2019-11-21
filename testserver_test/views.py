@@ -285,6 +285,7 @@ def NotificationPost(request):
     if request.method == 'POST':
         parm = request.POST
         judge = UserInfo.objects.filter(userId=parm.get("authorid"), phoneid=parm.get("phoneid"))
+        print("authorid"+parm.get("authorid")+"\n"+"phoneid"+parm.get("phoneid")+"\n")
         if judge.exists():
             notification = Notification()
             notification.themeid = parm.get('themeid')
