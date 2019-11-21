@@ -284,7 +284,7 @@ def queryForUserInfo(request):
 def NotificationPost(request):
     if request.method == 'POST':
         parm = request.POST
-        judge = UserInfo.objects.filter(userId=parm.get("userid"), phoneid=parm.get("phone"))
+        judge = UserInfo.objects.filter(userId=parm.get("userid"), phoneid=parm.get("phoneid"))
         if judge.exists():
             notification = Notification()
             notification.themeid = parm.get('themeid')
