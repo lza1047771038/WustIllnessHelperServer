@@ -271,7 +271,7 @@ def uploadFiles(request):
         md5 = pCalculateMd5(file)
         uploadFile = UploadFiles.getImageByMd5(md5)
         if uploadFile:  # 图片文件已存在
-            return JsonResponse({"path":uploadFile.getImageUrl()})
+            return JsonResponse({"path": uploadFile.getImageUrl()})
 
 
 def queryForUserInfo(request):
@@ -284,7 +284,7 @@ def queryForUserInfo(request):
 def NotificationPost(request):
     if request.method == 'POST':
         parm = request.POST
-        judge = UserInfo.objects.filter(userId=parm.get("userid"), phoneid=parm.get("phoneid"))
+        judge = UserInfo.objects.filter(userId=parm.get("authorid"), phoneid=parm.get("phoneid"))
         if judge.exists():
             notification = Notification()
             notification.themeid = parm.get('themeid')
@@ -299,7 +299,7 @@ def NotificationPost(request):
             return HttpResponse(1)
         else:
             # 账号异地登陆
-            return HttpResponse("账号异地登陆，请重新登录!")
+            return HttpResponse(2)
 
 
 def NotificationList(request):
