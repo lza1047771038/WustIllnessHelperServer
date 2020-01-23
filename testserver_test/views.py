@@ -288,7 +288,7 @@ def uploadFiles(request):
             for chunk in file.chunks():
                 f.write(chunk)
             f.close()
-            return uploadImg.getImageUrl()
+        return JsonResponse({"url": uploadImg.getImageUrl()})
     else:
         return render(request, "test.html")
 
