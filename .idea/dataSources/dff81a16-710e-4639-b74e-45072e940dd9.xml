@@ -1523,11 +1523,11 @@ permission_id</ColNames>
     </column>
     <column id="373" parent="288" name="commentrelations_id_id">
       <Position>5</Position>
-      <DataType>int(11)|0s</DataType>
+      <DataType>varchar(20)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="374" parent="288" name="CommentRelations_commentrelations_id_id_3f2e2541_fk_Comments_id">
+    <index id="374" parent="288" name="CommentRelations_commentrelations_id_id_3f2e2541_fk">
       <ColNames>commentrelations_id_id</ColNames>
       <Type>btree</Type>
     </index>
@@ -1536,7 +1536,7 @@ permission_id</ColNames>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="376" parent="288" name="CommentRelations_commentrelations_id_id_3f2e2541_fk_Comments_id">
+    <foreign-key id="376" parent="288" name="CommentRelations_commentrelations_id_id_3f2e2541_fk">
       <ColNames>commentrelations_id_id</ColNames>
       <RefSchemaName>test</RefSchemaName>
       <RefTableName>comments</RefTableName>
@@ -1544,9 +1544,8 @@ permission_id</ColNames>
     </foreign-key>
     <column id="377" parent="289" name="id">
       <Position>1</Position>
-      <DataType>int(11)|0s</DataType>
+      <DataType>varchar(20)|0s</DataType>
       <NotNull>1</NotNull>
-      <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="378" parent="289" name="theme_id">

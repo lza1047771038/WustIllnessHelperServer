@@ -739,9 +739,9 @@ def pIsAllowedImageType(ext):
     return False
 
 
-# 文件类型过滤 我们只允许上传常用的图片文件
+# 文件类型过滤 我们只允许上传常用的文件
 def pIsAllowedFileType(ext):
-    if ext in ["ppt", "mp4", "pptx", "avi"]:
+    if ext in ["ppt", "mp4", "pptx", "avi", "pdf"]:
         return True
     return False
 
