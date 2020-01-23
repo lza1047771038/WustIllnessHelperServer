@@ -90,7 +90,6 @@ class UploadFiles(models.Model):
         return s
 
 
-
 class SchoolImage(models.Model):
     name = models.CharField(max_length=20)
     imagepath = models.TextField()
@@ -204,7 +203,7 @@ class Theme(models.Model):
 
 
 class Comments(models.Model):
-    id = models.CharField(max_length=20, default='',primary_key=True)
+    id = models.CharField(max_length=20, default='', primary_key=True)
     theme_id = models.TextField(null=True)
     time = models.TextField()
     person_id = models.BigIntegerField()

@@ -229,7 +229,7 @@ def post_replies(request):  # 提交回复（回复评论）
             return HttpResponse(2)
 
 
-def SubjectsPost(request):
+def SubjectsPost(request):  # 上传课程
     if request.method == 'POST':
         parm = request.POST
         subject = Subjects()
@@ -244,7 +244,7 @@ def SubjectsPost(request):
             return HttpResponse(0)
 
 
-def ClassSectionPost(request):
+def ClassSectionPost(request):  # 上传课程小节
     if request.method == 'POST':
         parm = request.POST
         classes = ClassSection()
@@ -252,17 +252,18 @@ def ClassSectionPost(request):
         classes.classname = parm.get('classname')
         classes.filepath = parm.get('filepath')
         classes.submittime = str(int(round(time.time() * 1000)))
-
         classes.subjectid = Subjects(subjectid=parm.get('subjectid'))
         classes.save()
         return HttpResponse(1)
+    else:
+        return HttpResponse(0)
 
 
 def uploadFiles(request):
-    if request.method == 'POST':
-        file = request.FILES.get('file')
+    if request.method == "POST":
+        file = request.FILES.get("file")
         if not file:
-            return HttpResponse('图片未上传')
+            return HttpResponse('文件未上传')
 
         ext = pGetFileExtension(file)
         if not pIsAllowedFileType(ext):
@@ -270,8 +271,26 @@ def uploadFiles(request):
 
         md5 = pCalculateMd5(file)
         uploadFile = UploadFiles.getImageByMd5(md5)
-        if uploadFile:  # 图片文件已存在
-            return JsonResponse({"path": uploadFile.getImageUrl()})
+        if uploadFile:  # 图片文件已存在则返回图片绝对地址，不存在则保存文件之后再次返回图片网络地址
+            return uploadFile.getImageUrl()
+
+        uploadImg = UploadImage()
+        uploadImg.file_md5 = md5
+        uploadImg.file_size = file.size
+        uploadImg.file_type = ext
+        uploadImg.save()
+
+        # 打印绝对地址
+        print(uploadImg.getImageUrl())
+        # 保存 文件到磁盘
+        with open(uploadImg.getImagePath(), "wb+") as f:
+            # 分块写入
+            for chunk in file.chunks():
+                f.write(chunk)
+            f.close()
+            return uploadImg.getImageUrl()
+    else:
+        return render(request, "test.html")
 
 
 def queryForUserInfo(request):
@@ -285,7 +304,7 @@ def NotificationPost(request):
     if request.method == 'POST':
         parm = request.POST
         judge = UserInfo.objects.filter(userId=parm.get("authorid"), phoneid=parm.get("phoneid"))
-        print("authorid"+parm.get("authorid")+"\n"+"phoneid"+parm.get("phoneid")+"\n")
+        print("authorid " + parm.get("authorid") + "\n" + "phoneid " + parm.get("phoneid") + "\n")
         if judge.exists():
             notification = Notification()
             notification.themeid = parm.get('themeid')
@@ -390,7 +409,7 @@ def uploadSchoolImage(request):  # 上传校徽
 
         # 检查文件大小
         if not pIsAllowedFileSize(file.size):
-            return HttpResponse("文件太大，每个图片大小不超过1M")
+            return HttpResponse("文件太大，每个图片大小不超过10M")
 
         # 获取扩展类型 并 判断
         ext = pGetFileExtension(file)
@@ -730,7 +749,7 @@ def pIsAllowedFileType(ext):
 # 文件大小限制
 # settings.IMAGE_SIZE_LIMIT是常量配置，我设置为10M
 def pIsAllowedFileSize(size):
-    limit = 1024 * 1024
+    limit = 1024 * 1024 * 10
     if size < limit:
         return True
     return False
