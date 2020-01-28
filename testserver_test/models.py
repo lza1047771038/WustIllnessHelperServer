@@ -197,6 +197,7 @@ class Theme(models.Model):
     author_id = models.ForeignKey('UserInfo', to_field='userId', on_delete='CASCADE')
     contains = models.TextField()
     time = models.TextField()
+    imagestring = models.TextField()
     likes = models.IntegerField()
     comments_num = models.IntegerField()
 

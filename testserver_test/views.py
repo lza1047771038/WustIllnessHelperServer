@@ -171,6 +171,7 @@ def post_themes(request):
         theme.author_id = parm.get('userid')
         theme.comments_num = 0
         theme.likes = 0
+        theme.imagestring = parm.get('imageString')
         theme.time = parm.get("themeid")
         theme.contains = parm.get("contains")
         theme.save()
