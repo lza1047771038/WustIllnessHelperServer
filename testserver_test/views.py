@@ -260,6 +260,49 @@ def ClassSectionPost(request):  # 上传课程小节
         return HttpResponse(0)
 
 
+def SubjectsRequest(request):
+    if request.method == 'POST':
+        parm = request.POST
+
+        result = Subjects.objects.all().order_by('-subjectid').values()
+
+        data = {}
+        print(result.count())
+        pagesize = parm.get("pagesize", 10)
+        page = parm.get("page", 1)
+        paginator = Paginator(result, pagesize)
+        try:
+            books = paginator.page(page)
+        except PageNotAnInteger:
+            books = paginator.page(1)
+        except EmptyPage:
+            books = paginator.page(paginator.num_pages)
+        data['subjects'] = list(books)
+        return JsonResponse(data)
+
+
+def ClassSectionRequest(request):
+    if request.method == 'POST':
+        parm = request.POST
+
+        result = ClassSection.objects.all().filter(subjectid_id=parm.get('subjectid')).order_by(
+            'submittime').values()
+
+        data = {}
+        print(result.count())
+        pagesize = parm.get("pagesize", 10)
+        page = parm.get("page", 1)
+        paginator = Paginator(result, pagesize)
+        try:
+            books = paginator.page(page)
+        except PageNotAnInteger:
+            books = paginator.page(1)
+        except EmptyPage:
+            books = paginator.page(paginator.num_pages)
+        data['classes'] = list(books)
+        return JsonResponse(data)
+
+
 def uploadFiles(request):
     if request.method == "POST":
         file = request.FILES.get("file")

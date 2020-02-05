@@ -39,6 +39,8 @@ urlpatterns = [
     url(r'^reply_post', views.post_replies),
     url(r'^SubjectsPost',views.SubjectsPost),
     url(r'^ClassSectionPost',views.ClassSectionPost),
+    url(r'^SubjectsRequest',views.SubjectsRequest),
+    url(r'^ClassSectionRequest',views.ClassSectionRequest),
     url(r'^uploadFiles',views.uploadFiles),
     url(r'^MediaFiles/(?P<path>.*)', serve, {'document_root': settings.MEDIA_ROOT}),
     url(r'^Survey_Result', views.Survey_result),
