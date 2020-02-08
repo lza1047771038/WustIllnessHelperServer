@@ -272,6 +272,7 @@ class ClassSection(models.Model):
     classid = models.CharField(max_length=20, primary_key=True, unique=True, auto_created=True)
     classname = models.CharField(max_length=20)
     submittime = models.CharField(max_length=20)
+    classImage = models.TextField(default='')
     filepath = models.TextField()
     subjectid = models.ForeignKey('Subjects', to_field='subjectid', on_delete='CASCADE')
 

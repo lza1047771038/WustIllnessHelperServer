@@ -252,6 +252,7 @@ def ClassSectionPost(request):  # 上传课程小节
         classes.classid = 'CSec' + str(int(round(time.time() * 1000)))
         classes.classname = parm.get('classname')
         classes.filepath = parm.get('filepath')
+        classes.classImage = parm.get('imagepath')
         classes.submittime = str(int(round(time.time() * 1000)))
         classes.subjectid = Subjects(subjectid=parm.get('subjectid'))
         classes.save()
