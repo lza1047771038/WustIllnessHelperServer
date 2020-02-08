@@ -303,6 +303,63 @@ def ClassSectionRequest(request):
         return JsonResponse(data)
 
 
+def Search(request):
+    if request.method == 'POST':
+        parm = request.POST
+        data = {}
+        types = parm.get("type", '0')
+        print(types)
+        pagesize = parm.get('pagesize', 5)
+        page = parm.get('page', 1)
+        if types == '0' or types == '1':
+            print(1)
+            result = Notification.objects.all().filter(title__contains=parm.get('keywords')).order_by(
+                "-post_time").values()
+            paginator = Paginator(result, pagesize)
+            try:
+                books = paginator.page(page)
+            except PageNotAnInteger:
+                books = paginator.page(1)
+            except EmptyPage:
+                books = paginator.page(paginator.num_pages)
+            data['notification'] = list(books)
+        if types == '0' or types == '2':
+            print(2)
+            result = Subjects.objects.all().filter(subjecttitle__contains=parm.get('keywords')).order_by(
+                '-submittime').values()
+            paginator = Paginator(result, pagesize)
+            try:
+                books = paginator.page(page)
+            except PageNotAnInteger:
+                books = paginator.page(1)
+            except EmptyPage:
+                books = paginator.page(paginator.num_pages)
+            data['subjects'] = list(books)
+        if types == '0' or types == '3':
+            print(3)
+            result = Theme.objects.all().filter(contains__contains=parm.get('keywords')).order_by('-time').values()
+            paginator = Paginator(result, pagesize)
+            try:
+                books = paginator.page(page)
+            except PageNotAnInteger:
+                books = paginator.page(1)
+            except EmptyPage:
+                books = paginator.page(paginator.num_pages)
+            data['theme'] = list(books)
+        if types == '0' or types == '4':
+            print(4)
+            result = UserInfo.objects.all().filter(username__contains=parm.get('keywords')).order_by('-userId').values()
+            paginator = Paginator(result, pagesize)
+            try:
+                books = paginator.page(page)
+            except PageNotAnInteger:
+                books = paginator.page(1)
+            except EmptyPage:
+                books = paginator.page(paginator.num_pages)
+            data['userinfo'] = list(books)
+        return JsonResponse(data)
+
+
 def uploadFiles(request):
     if request.method == "POST":
         file = request.FILES.get("file")
