@@ -237,6 +237,7 @@ def SubjectsPost(request):  # 上传课程
         subject.subjectid = 'Sub' + str(int(round(time.time() * 1000)))
         subject.subjecttitle = parm.get('title')
         subject.submittime = str(int(round(time.time() * 1000)))
+        subject.filepath = parm.get('filepath')
         subject.titleimage = parm.get('imagepath')
         try:
             subject.save()

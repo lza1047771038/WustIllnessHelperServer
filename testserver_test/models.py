@@ -261,6 +261,7 @@ class Subjects(models.Model):
     subjectid = models.CharField(max_length=20, primary_key=True, unique=True, auto_created=True)
     subjecttitle = models.CharField(max_length=20)
     titleimage = models.TextField()
+    filepath = models.TextField(default='')
     submittime = models.CharField(max_length=20)
 
     class Meta:
