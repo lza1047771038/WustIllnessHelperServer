@@ -15,7 +15,7 @@ class SubjectsAdmin(admin.ModelAdmin):
 
 
 class ThemeAdmin(admin.ModelAdmin):
-    list_display = ('themeid', 'contains', 'time', 'likes', 'comments_num', 'author_id_id')
+    list_display = ('theme_id', 'contains', 'time', 'likes', 'comments_num', 'author_id_id')
     list_editable = ('contains', 'time')
     list_per_page = 10
     ordering = ('id',)
