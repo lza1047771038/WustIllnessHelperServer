@@ -266,7 +266,10 @@ def SubjectDelete(request):
     if request.method == 'POST':
         parm = request.POST
         try:
-            Subjects.objects.all().filter(subjectid=parm.get('subjectid')).delete()
+            subject = Subjects.objects.all().filter(subjectid=parm.get('subjectid'))
+            if not subject.exists():
+                return HttpResponse(2)
+            subject.delete()
         except Exception:
             return HttpResponse(0)
         return HttpResponse(1)
