@@ -40,6 +40,7 @@ urlpatterns = [
     url(r'^Search', views.Search),
     url(r'^SubjectsPost', views.SubjectsPost),
     url(r'^ClassSectionPost', views.ClassSectionPost),
+    url(r'^SubjectDelete', views.SubjectDelete),
     url(r'^SubjectsRequest', views.SubjectsRequest),
     url(r'^ClassSectionRequest', views.ClassSectionRequest),
     url(r'^uploadFiles', views.uploadFiles),
