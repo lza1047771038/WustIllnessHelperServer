@@ -7,6 +7,20 @@ admin.site.site_header = '青春彩虹伞后台管理'
 admin.site.site_title = '彩虹伞'
 
 
+class SubjectsAdmin(admin.ModelAdmin):
+    list_display = ('subjectid', 'subjecttitle', 'titleimage', 'submittime')
+    list_editable = ('subjecttitle', 'titleimage')
+    list_per_page = 5
+    ordering = ('subjectid',)
+
+
+class ThemeAdmin(admin.ModelAdmin):
+    list_display = ('themeid', 'contains', 'time', 'likes', 'comments_num', 'author_id_id')
+    list_editable = ('contains', 'time')
+    list_per_page = 10
+    ordering = ('id',)
+
+
 class NotificationAdmin(admin.ModelAdmin):
     list_display = ('themeid', 'title', 'contains', 'post_time', 'author_id_id', 'number')
     list_editable = ('title', 'number')

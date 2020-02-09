@@ -262,6 +262,16 @@ def ClassSectionPost(request):  # 上传课程小节
         return HttpResponse(0)
 
 
+def SubjectDelete(request):
+    if request.method == 'POST':
+        parm = request.POST
+        try:
+            Subjects.objects.all().filter(subjectid=parm.get('subjectid')).delete()
+        except Exception:
+            return HttpResponse(0)
+        return HttpResponse(1)
+
+
 def SubjectsRequest(request):
     if request.method == 'POST':
         parm = request.POST
