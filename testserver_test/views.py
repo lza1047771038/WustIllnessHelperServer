@@ -338,8 +338,8 @@ def SubjectCommentPost(request):
 
 
 def SubjectCommentRequest(request):
-    if request.method == 'GET':
-        parm = request.GET
+    if request.method == 'POST':
+        parm = request.POST
         data = {}
         result = SubjectComments.objects.all().filter(subjectid_id=parm.get('subjectid')).values()
         try:
