@@ -200,8 +200,7 @@ class SubjectComments(models.Model):
     time = models.CharField(max_length=20, default='')
     comment_user_id = models.ForeignKey('UserInfo', to_field='userId', related_name='comment_user_id',
                                         on_delete='CASCADE')
-    comment_user_name = models.ForeignKey('UserInfo', to_field='username', related_name='comment_user_name',
-                                          on_delete='CASCADE')
+    comment_user_name = models.TextField()
 
     class Meta:
         db_table = "SubjectComments"

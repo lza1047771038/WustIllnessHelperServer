@@ -327,9 +327,9 @@ def SubjectCommentPost(request):
         comments.contains = parm.get('contains')
         comments.pdfpage = parm.get('pdfpage')
         comments.time = parm.get('time')
-        userinfo = UserInfo(userId=parm.get('userid'), username=parm.get('username'))
+        userinfo = UserInfo(userId=parm.get('userid'))
         comments.comment_user_id = userinfo
-        comments.comment_user_name = userinfo
+        comments.comment_user_name = parm.get('username')
         try:
             comments.save()
         except Exception:
