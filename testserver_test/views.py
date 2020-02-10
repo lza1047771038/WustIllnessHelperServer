@@ -418,9 +418,9 @@ def uploadFiles(request):
             return HttpResponse('文件类型错误')
 
         md5 = pCalculateMd5(file)
-        uploadFile = UploadFiles.getImageByMd5(md5)
+        uploadFile = UploadFiles.getFileByMd5(md5)
         if uploadFile:  # 图片文件已存在则返回图片绝对地址，不存在则保存文件之后再次返回图片网络地址
-            return uploadFile.getImageUrl()
+            return uploadFile.getFileUrl()
 
         uploadImg = UploadFiles()
         uploadImg.file_md5 = md5
@@ -429,14 +429,14 @@ def uploadFiles(request):
         uploadImg.save()
 
         # 打印绝对地址
-        print(uploadImg.getImageUrl())
+        print(uploadImg.getFileUrl())
         # 保存 文件到磁盘
-        with open(uploadImg.getImagePath(), "wb+") as f:
+        with open(uploadImg.getFilePath(), "wb+") as f:
             # 分块写入
             for chunk in file.chunks():
                 f.write(chunk)
             f.close()
-        return JsonResponse({"url": uploadImg.getImageUrl()})
+        return JsonResponse({"url": uploadImg.getFileUrl()})
     else:
         return render(request, "test.html")
 

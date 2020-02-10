@@ -65,7 +65,7 @@ class UploadFiles(models.Model):
 
     # 我们还定义了通过文件md5值获取模型对象的类方法
     @classmethod
-    def getImageByMd5(cls, md5):
+    def getFileByMd5(cls, md5):
         try:
             return UploadFiles.objects.filter(file_md5=md5).first()
         except Exception as e:
@@ -75,13 +75,13 @@ class UploadFiles(models.Model):
     # 其中settings.WEB_HOST_NAME 是常量配置，指你的服务器的域名
     # settings.WEB_IMAGE_SERVER_PATH 也是常量配置，指你的静态图片资源访问路径
     # 这些配置项我在Django项目的settings.py文件中进行配置
-    def getImageUrl(self):
+    def getFileUrl(self):
         filename = self.file_md5 + "." + self.file_type
         url = "http://47.100.93.91:8996" + "/MediaFiles/CBTClassFiles/" + filename
         return url
 
     # 获取本图片在本地的位置，即你的文件系统的路径，图片会保存在这个路径下
-    def getImagePath(self):
+    def getFilePath(self):
         filename = self.file_md5 + "." + self.file_type
         path = "/home/admin/project/WustIllnessHelperServer/MediaFiles/CBTClassFiles/" + filename
         return path
