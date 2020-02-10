@@ -102,7 +102,7 @@ class SchoolImage(models.Model):
 
 
 class UserInfo(models.Model):
-    userId = models.BigIntegerField(primary_key=True, unique=True)
+    userId = models.BigIntegerField(primary_key=True)
     userType = models.IntegerField(default=0)
     type = models.IntegerField()  # user类型  实验组，对照组
     userImagePath = models.TextField()
