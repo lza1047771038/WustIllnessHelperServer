@@ -422,7 +422,7 @@ def uploadFiles(request):
         if uploadFile:  # 图片文件已存在则返回图片绝对地址，不存在则保存文件之后再次返回图片网络地址
             return uploadFile.getImageUrl()
 
-        uploadImg = UploadImage()
+        uploadImg = uploadFile()
         uploadImg.file_md5 = md5
         uploadImg.file_size = file.size
         uploadImg.file_type = ext
