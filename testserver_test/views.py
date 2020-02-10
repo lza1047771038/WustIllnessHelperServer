@@ -416,11 +416,10 @@ def uploadFiles(request):
         ext = pGetFileExtension(file)
         if not pIsAllowedFileType(ext):
             return HttpResponse('文件类型错误')
-
         md5 = pCalculateMd5(file)
         uploadFile = UploadFiles.getFileByMd5(md5)
         if uploadFile:  # 图片文件已存在则返回图片绝对地址，不存在则保存文件之后再次返回图片网络地址
-            return uploadFile.getFileUrl()
+            return JsonResponse({"url": uploadFile.getFileUrl()})
 
         uploadImg = UploadFiles()
         uploadImg.file_md5 = md5
