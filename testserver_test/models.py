@@ -106,7 +106,7 @@ class UserInfo(models.Model):
     userType = models.IntegerField(default=0)
     type = models.IntegerField()  # user类型  实验组，对照组
     userImagePath = models.TextField()
-    username = models.CharField(max_length=10, unique=True)
+    username = models.CharField(max_length=10)
     password = models.TextField(max_length=20)
     age = models.IntegerField(default=0)
     coin = models.IntegerField(default=0)
