@@ -204,7 +204,7 @@ class SubjectComments(models.Model):
                                           on_delete='CASCADE')
 
     class Meta:
-        db_table = "弹幕"
+        db_table = "SubjectComments"
 
 
 class Theme(models.Model):
