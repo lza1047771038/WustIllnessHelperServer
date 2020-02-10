@@ -102,11 +102,11 @@ class SchoolImage(models.Model):
 
 
 class UserInfo(models.Model):
-    userId = models.BigIntegerField(primary_key=True)
+    userId = models.BigIntegerField(primary_key=True, unique=True)
     userType = models.IntegerField(default=0)
     type = models.IntegerField()  # user类型  实验组，对照组
     userImagePath = models.TextField()
-    username = models.CharField(max_length=10)
+    username = models.CharField(max_length=10, unique=True)
     password = models.TextField(max_length=20)
     age = models.IntegerField(default=0)
     coin = models.IntegerField(default=0)
@@ -191,6 +191,21 @@ class Survey(models.Model):
 # python manage.py makemigrations --empty testserver_test
 # python manage.py makemigrations
 # python manage.py migrate
+
+class SubjectComments(models.Model):
+    id = models.CharField(max_length=20, default='', primary_key=True)
+    subjectid = models.ForeignKey('Subjects', to_field='subjectid', on_delete='CASCADE')
+    contains = models.TextField()
+    pdfpage = models.IntegerField()
+    time = models.CharField(max_length=20, default='')
+    comment_user_id = models.ForeignKey('UserInfo', to_field='userId', related_name='comment_user_id',
+                                        on_delete='CASCADE')
+    comment_user_name = models.ForeignKey('UserInfo', to_field='username', related_name='comment_user_name',
+                                          on_delete='CASCADE')
+
+    class Meta:
+        db_table = "弹幕"
+
 
 class Theme(models.Model):
     theme_id = models.TextField()

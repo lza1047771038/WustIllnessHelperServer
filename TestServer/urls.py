@@ -39,6 +39,8 @@ urlpatterns = [
     url(r'^reply_post', views.post_replies),
     url(r'^Search', views.Search),
     url(r'^SubjectsPost', views.SubjectsPost),
+    url(r'^SubjectCommentPost', views.SubjectCommentPost),
+    url(r'^SubjectCommentRequest', views.SubjectCommentRequest),
     url(r'^ClassSectionPost', views.ClassSectionPost),
     url(r'^SubjectDelete', views.SubjectDelete),
     url(r'^SubjectsRequest', views.SubjectsRequest),

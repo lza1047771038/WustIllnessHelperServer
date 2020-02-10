@@ -318,6 +318,38 @@ def ClassSectionRequest(request):
         return JsonResponse(data)
 
 
+def SubjectCommentPost(request):
+    if request.method == 'POST':
+        parm = request.POST
+        comments = SubjectComments()
+        comments.id = 'SubCom' + str(int(round(time.time() * 1000)))
+        comments.subjectid = Subjects(subjectid=parm.get('subjectid'))
+        comments.contains = parm.get('contains')
+        comments.pdfpage = parm.get('pdfpage')
+        comments.time = parm.get('time')
+        userinfo = UserInfo(userId=parm.get('userid'), username=parm.get('username'))
+        comments.comment_user_id = userinfo
+        comments.comment_user_name = userinfo
+        try:
+            comments.save()
+        except Exception:
+            return HttpResponse(0)
+        return HttpResponse(1)
+
+
+def SubjectCommentRequest(request):
+    if request.method == 'GET':
+        parm = request.GET
+        data = {}
+        result = SubjectComments.objects.all().filter(subjectid_id=parm.get('subjectid')).values()
+        try:
+            data['comments'] = list(result)
+            data['code'] = 200
+        except Exception:
+            data['code'] = 202
+        return JsonResponse(data)
+
+
 def Search(request):
     if request.method == 'POST':
         parm = request.POST
