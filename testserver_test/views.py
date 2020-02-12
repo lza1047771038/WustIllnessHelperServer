@@ -337,6 +337,39 @@ def SubjectCommentPost(request):
         return HttpResponse(1)
 
 
+def SubjectHomeWorkPost(request):
+    if request.method == 'POST':
+        parm = request.POST
+        homework = TestHomeWorkChoice()
+        homework.id = str(int(round(time.time() * 1000)))
+        homework.selectionA = parm.get('A', '')
+        homework.selectionB = parm.get('B', '')
+        homework.selectionC = parm.get('C', '')
+        homework.selectionD = parm.get('D', '')
+        homework.selectionE = parm.get('E', '')
+        homework.answer = parm.get('answer', '')
+        homework.subjectsid = Subjects(subjectid=parm.get('subjectid'))
+
+        try:
+            homework.save()
+        except Exception:
+            return HttpResponse(0)
+        return HttpResponse(1)
+
+
+def SubjectHomeWorkRequest(request):
+    if request.method == 'POST':
+        parm = request.POST
+        data = {}
+        result = TestHomeWorkChoice.objects.all().filter(subjectsid_id=parm.get('subjectid')).values()
+        try:
+            data['result'] = list(result)
+            data['code'] = 200
+        except Exception:
+            data['code'] = 202
+        return JsonResponse(data)
+
+
 def SubjectCommentRequest(request):
     if request.method == 'POST':
         parm = request.POST

@@ -40,6 +40,8 @@ urlpatterns = [
     url(r'^Search', views.Search),
     url(r'^SubjectsPost', views.SubjectsPost),
     url(r'^SubjectCommentPost', views.SubjectCommentPost),
+    url(r'^SubjectHomeWorkPost', views.SubjectHomeWorkPost),
+    url(r'^SubjectHomeWorkRequest', views.SubjectHomeWorkRequest),
     url(r'^SubjectCommentRequest', views.SubjectCommentRequest),
     url(r'^ClassSectionPost', views.ClassSectionPost),
     url(r'^SubjectDelete', views.SubjectDelete),
