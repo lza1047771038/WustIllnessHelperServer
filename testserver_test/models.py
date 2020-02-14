@@ -299,6 +299,8 @@ class ClassSection(models.Model):
 class TestHomeWorkChoice(models.Model):
     id = models.CharField(max_length=20, primary_key=True, unique=True, auto_created=True)
     title = models.CharField(max_length=50)
+    page = models.IntegerField(default=-1)
+    time = models.CharField(max_length=20, default=None)
     selectionA = models.CharField(max_length=50)
     selectionB = models.CharField(max_length=50)
     selectionC = models.CharField(max_length=50)
