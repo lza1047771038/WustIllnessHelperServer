@@ -342,6 +342,7 @@ def SubjectHomeWorkPost(request):
         parm = request.POST
         homework = TestHomeWorkChoice()
         homework.id = str(int(round(time.time() * 1000)))
+        homework.title = parm.get("title", '')
         homework.selectionA = parm.get('A', '')
         homework.selectionB = parm.get('B', '')
         homework.selectionC = parm.get('C', '')
