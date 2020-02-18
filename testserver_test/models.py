@@ -109,8 +109,15 @@ class UserInfo(models.Model):
     username = models.CharField(max_length=10)
     password = models.TextField(max_length=20)
     age = models.IntegerField(default=0)
-    coin = models.IntegerField(default=0)
+    coin = models.FloatField(default=0.0)
     phoneid = models.TextField(default='')
+
+    @classmethod
+    def getUser(cls, userId):
+        try:
+            return UserInfo.objects.filter(userId=userId).first()
+        except Exception as e:
+            return None
 
     class Meta:
         db_table = "UserInfo"

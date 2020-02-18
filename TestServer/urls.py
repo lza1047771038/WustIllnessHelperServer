@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^login', views.login),
     url(r'^register', views.Register),
     url(r'^update', views.UpdateInfo),
+    url(r'^UpdateUserCoin', views.UpdateUserCoin),
     url(r'^theme_request', views.Theme_Response),
     url(r'^comment_request', views.Comment_Response),
     url(r'^reply_request', views.reply_response),

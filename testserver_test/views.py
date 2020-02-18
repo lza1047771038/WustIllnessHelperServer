@@ -60,6 +60,21 @@ def UpdateInfo(request):  # 更新用户信息
         return render(request, "update.html")
 
 
+def UpdateUserCoin(request):
+    if request.method == 'POST':
+        parm = request.POST
+        userId = parm.get('userid', None)
+        if userId is None:
+            return HttpResponse('请输入UserId')
+        user = UserInfo.getUser(userId)
+        try:
+            user.coin = parm.get('coin')
+            user.save()
+        except Exception as e:
+            return HttpResponse(0)
+        return HttpResponse(1)
+
+
 def getUserInfo(request):
     if request.method == 'POST':
         parm = request.POST
