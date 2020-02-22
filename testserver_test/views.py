@@ -183,7 +183,7 @@ def post_themes(request):
         parm = request.POST
         theme = Theme()
         theme.theme_id = parm.get("themeid")
-        theme.author_id = parm.get('userid')
+        theme.author_id = UserInfo(userId=parm.get('userid'))
         theme.comments_num = 0
         theme.likes = 0
         theme.imagestring = parm.get('imageString')
