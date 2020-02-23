@@ -118,7 +118,7 @@ def Theme_Response(request):
         except PageNotAnInteger:
             books = paginator.page(1)
         except EmptyPage:
-            books = paginator.page(paginator.num_pages)
+            books = []
         for item in books:
             userinfo = UserInfo.objects.all().filter(userId=item['author_id_id']).first()
             item['username'] = userinfo.username
