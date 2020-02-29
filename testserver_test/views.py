@@ -197,16 +197,24 @@ def post_comments(request):  # 提交评论（回复帖子/推文）
     if request.method == "POST":
         parm = request.POST
         judge = UserInfo.objects.filter(userId=parm.get("userid"), phoneid=parm.get("phoneid"))
+        theme_id = parm.get("themeid")
         if judge.exists():
-            comments = Comments()
-            comments.id = parm.get("commentid")
-            comments.theme_id = parm.get("themeid")
-            comments.time = int(round(time.time() * 1000))
-            comments.person_id = parm.get('userid')
-            comments.contains = parm.get('contains')
-            comments.likes = 0
-            comments.replies = 0
-            comments.save()
+            try:
+                if str(theme_id).startswith("THE"):
+                    first = Theme.objects.all().filter(theme_id=theme_id).values().first()
+                    first.comments_num = first.comments_num + 1
+                    first.save()
+                comments = Comments()
+                comments.id = parm.get("commentid")
+                comments.theme_id = theme_id
+                comments.time = int(round(time.time() * 1000))
+                comments.person_id = parm.get('userid')
+                comments.contains = parm.get('contains')
+                comments.likes = 0
+                comments.replies = 0
+                comments.save()
+            except Exception:
+                return HttpResponse(0)
             return HttpResponse(1)
         else:
             # 账号异地登陆
