@@ -194,8 +194,8 @@ def post_themes(request):
 
 
 def post_comments(request):  # 提交评论（回复帖子/推文）
-    if request.method == "GET":
-        parm = request.GET
+    if request.method == "POST":
+        parm = request.POST
         judge = UserInfo.objects.filter(userId=parm.get("userid"), phoneid=parm.get("phoneid"))
         theme_id = parm.get("themeid")
         if judge.exists():
