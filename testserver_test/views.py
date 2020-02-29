@@ -194,14 +194,14 @@ def post_themes(request):
 
 
 def post_comments(request):  # 提交评论（回复帖子/推文）
-    if request.method == "POST":
-        parm = request.POST
+    if request.method == "GET":
+        parm = request.GET
         judge = UserInfo.objects.filter(userId=parm.get("userid"), phoneid=parm.get("phoneid"))
         theme_id = parm.get("themeid")
         if judge.exists():
             try:
                 if str(theme_id).startswith("THE"):
-                    first = Theme.objects.all().filter(theme_id=theme_id).values().first()
+                    first = Theme.objects.all().filter(theme_id=theme_id).first()
                     first.comments_num = first.comments_num + 1
                     first.save()
                 comments = Comments()
