@@ -5,6 +5,7 @@ import time
 
 import xlrd
 import xlwt
+from PIL import Image
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import JsonResponse
 from django.shortcuts import HttpResponse, render
@@ -793,6 +794,16 @@ def Survey_ManualQuestion_Save(request):
         question.title = parm.get('problem')
         question.save()
     return render(request, 'AddManualQuestion.html')
+
+
+def Img_Get(request, path):
+    im = Image.open(settings.IMAGE_ROOT + path)
+    x, y = im.size
+    im = im.resize((int(x / 2), int(y / 2)), Image.ANTIALIAS)
+    response = HttpResponse(content_type="image/png")
+    # 将PIL的image对象写入response中，通过response返回
+    im.save(response, "PNG")
+    return response
 
 
 def EducationalClass_Response(request):
