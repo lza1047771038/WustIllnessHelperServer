@@ -798,8 +798,10 @@ def Survey_ManualQuestion_Save(request):
 
 def Img_Get(request, path):
     im = Image.open(settings.IMAGE_ROOT + path)
-    x, y = im.size
-    im = im.resize((int(x / 2), int(y / 2)), Image.ANTIALIAS)
+    parm = request.GET
+    x = parm.get("x",500)
+    y = parm.get("y",500)
+    im = im.resize((int(x), int(y)), Image.ANTIALIAS)
     response = HttpResponse(content_type="image/png")
     # 将PIL的image对象写入response中，通过response返回
     im.save(response, "PNG")
