@@ -803,7 +803,7 @@ def Img_Get(request, path):
     y = parm.get("y", 0)
     size = parm.get("size", 1)
     if x == 0 and y == 0:
-        x, y = im.size()
+        x, y = im.size
         im = im.resize((int(x * size), int(y * size)), Image.ANTIALIAS)
     else:
         im = im.resize((int(x), int(y)), Image.ANTIALIAS)
